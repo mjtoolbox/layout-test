@@ -50,7 +50,6 @@ function App() {
         <Content>{data.content && <ContentEx />}</Content>
         <Footer>{data.footer && <FooterEx />}</Footer>
       </Root>
-      )
     </MuiThemeProvider>
   );
 }

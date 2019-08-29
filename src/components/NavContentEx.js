@@ -8,38 +8,66 @@ import Divider from '@material-ui/core/Divider';
 
 const list = [
   {
+    primaryText: 'Home',
+    icon: 'home',
+    linkUrl: '/'
+  },
+  {
     primaryText: 'Registration',
-    icon: 'input'
+    icon: 'input',
+    linkUrl: '/'
   },
   {
     primaryText: 'Programs',
-    icon: 'subject'
+    icon: 'subject',
+    linkUrl: '/'
   },
   {
     primaryText: 'Students',
-    icon: 'face'
+    icon: 'face',
+    linkUrl: '/'
   },
   {
     primaryText: 'Planning',
-    icon: 'calendar_today'
+    icon: 'calendar_today',
+    linkUrl: '/'
   },
   {
     primaryText: 'Report Card',
-    icon: 'assessment'
+    icon: 'assessment',
+    linkUrl: '/'
+  },
+  {
+    primaryText: 'Teachers',
+    icon: 'person',
+    linkUrl: '/Teachers'
   },
   {
     primaryText: 'Payroll',
-    icon: 'account_balance'
+    icon: 'account_balance',
+    linkUrl: '/'
   },
   {
     primaryText: 'Management Report',
-    icon: 'trending_up'
+    icon: 'trending_up',
+    linkUrl: '/'
   }
 ];
+
+function hello() {
+  alert('hello!');
+}
+
 const NavContentEx = () => (
   <List>
-    {list.map(({ primaryText, icon }, i) => (
-      <ListItem key={primaryText} selected={i === 0} button>
+    {list.map(({ primaryText, icon, linkUrl }, i) => (
+      <ListItem
+        key={primaryText}
+        selected={i === 0}
+        button
+        link={linkUrl}
+        onClick={hello}
+      >
         <ListItemIcon>
           <Icon>{icon}</Icon>
         </ListItemIcon>
