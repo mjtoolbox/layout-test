@@ -2,16 +2,22 @@ import React, { useState } from 'react';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Root, Header, Nav, Content, Footer, presets } from 'mui-layout';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+
 import Icon from '@material-ui/core/Icon';
 
 import NavContentEx from './components/NavContentEx';
-import Teacher from './components/Teachers';
 import NavHeaderEx from './components/NavHeaderEx';
 import HeaderEx from './components/HeaderEx';
-import Main from './components/ContentEx';
+import ContentEx from './components/ContentEx';
 import FooterEx from './components/FooterEx';
 
+import Main from './components/Main';
+import Teacher from './components/Teachers';
+
 import './styles.css';
+import TeacherEdit from './components/TeacherEdit';
+import TeacherCreate from './components/TeacherCreate';
 
 function App() {
   const [preset, setPreset] = useState('createStandardLayout');
@@ -21,7 +27,7 @@ function App() {
     content: true,
     footer: true
   });
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(6);
 
   function RenderContent(index) {
     switch (index) {
@@ -30,7 +36,7 @@ function App() {
       case 6:
         return <Teacher />;
       default:
-        return <Main />;
+        return <ContentEx />;
     }
   }
 
@@ -64,7 +70,12 @@ function App() {
         >
           {data.nav && <NavContentEx parentCallBack={callback} />}
         </Nav>
-        <Content>{RenderContent(index)}</Content>
+        <Content>
+          {RenderContent(index)}
+          <Route exact path='/create' component={<TeacherCreate />} />
+          <Route path='/edit/:teacher_id' component={<TeacherEdit />} />
+          <Route path='/teachers' component={<Teacher />} />
+        </Content>
         <Footer>{data.footer && <FooterEx />}</Footer>
       </Root>
     </MuiThemeProvider>

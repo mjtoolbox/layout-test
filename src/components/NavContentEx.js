@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -9,53 +9,43 @@ import Divider from '@material-ui/core/Divider';
 const list = [
   {
     primaryText: 'Home',
-    icon: 'home',
-    linkUrl: '/'
+    icon: 'home'
   },
   {
     primaryText: 'Registration',
-    icon: 'input',
-    linkUrl: '/'
+    icon: 'input'
   },
   {
     primaryText: 'Programs',
-    icon: 'subject',
-    linkUrl: '/'
+    icon: 'subject'
   },
   {
     primaryText: 'Students',
-    icon: 'face',
-    linkUrl: '/'
+    icon: 'face'
   },
   {
     primaryText: 'Planning',
-    icon: 'calendar_today',
-    linkUrl: '/'
+    icon: 'calendar_today'
   },
   {
     primaryText: 'Report Card',
-    icon: 'assessment',
-    linkUrl: '/'
+    icon: 'assessment'
   },
   {
     primaryText: 'Teachers',
-    icon: 'person',
-    linkUrl: '/Teachers'
+    icon: 'person'
   },
   {
     primaryText: 'Payroll',
-    icon: 'account_balance',
-    linkUrl: '/'
+    icon: 'account_balance'
   },
   {
     primaryText: 'Management Report',
-    icon: 'trending_up',
-    linkUrl: '/'
+    icon: 'trending_up'
   }
 ];
 
 const NavContentEx = ({ parentCallBack }) => {
-  // const [index, setIndex] = useState(0);
   return (
     <List>
       {list.map(({ primaryText, icon, linkUrl }, i) => (
@@ -63,7 +53,6 @@ const NavContentEx = ({ parentCallBack }) => {
           key={primaryText}
           selected={i === 0}
           button
-          link={linkUrl}
           onClick={() => {
             parentCallBack(i);
           }}
