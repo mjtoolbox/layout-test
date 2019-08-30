@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -54,41 +54,42 @@ const list = [
   }
 ];
 
-function hello() {
-  alert('hello!');
-}
-
-const NavContentEx = () => (
-  <List>
-    {list.map(({ primaryText, icon, linkUrl }, i) => (
-      <ListItem
-        key={primaryText}
-        selected={i === 0}
-        button
-        link={linkUrl}
-        onClick={hello}
-      >
+const NavContentEx = ({ parentCallBack }) => {
+  // const [index, setIndex] = useState(0);
+  return (
+    <List>
+      {list.map(({ primaryText, icon, linkUrl }, i) => (
+        <ListItem
+          key={primaryText}
+          selected={i === 0}
+          button
+          link={linkUrl}
+          onClick={() => {
+            parentCallBack(i);
+          }}
+        >
+          <ListItemIcon>
+            <Icon>{icon}</Icon>
+          </ListItemIcon>
+          <ListItemText
+            primary={primaryText}
+            primaryTypographyProps={{ noWrap: true }}
+          />
+        </ListItem>
+      ))}
+      <Divider style={{ margin: '12px 0' }} />
+      <ListItem button>
         <ListItemIcon>
-          <Icon>{icon}</Icon>
+          <Icon>settings</Icon>
         </ListItemIcon>
         <ListItemText
-          primary={primaryText}
+          primary={'Settings & account'}
           primaryTypographyProps={{ noWrap: true }}
         />
       </ListItem>
-    ))}
-    <Divider style={{ margin: '12px 0' }} />
-    <ListItem button>
-      <ListItemIcon>
-        <Icon>settings</Icon>
-      </ListItemIcon>
-      <ListItemText
-        primary={'Settings & account'}
-        primaryTypographyProps={{ noWrap: true }}
-      />
-    </ListItem>
-  </List>
-);
+    </List>
+  );
+};
 
 NavContentEx.propTypes = {};
 NavContentEx.defaultProps = {};
