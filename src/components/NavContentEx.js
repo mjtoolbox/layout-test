@@ -5,47 +5,58 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Icon from '@material-ui/core/Icon';
 import Divider from '@material-ui/core/Divider';
+import { Link } from 'react-router-dom';
 
 const list = [
   {
     primaryText: 'Home',
-    icon: 'home'
+    icon: 'home',
+    linkUrl: '/main'
   },
   {
     primaryText: 'Registration',
-    icon: 'input'
+    icon: 'input',
+    linkUrl: '/registration'
   },
   {
     primaryText: 'Programs',
-    icon: 'subject'
+    icon: 'subject',
+    linkUrl: '/programs'
   },
   {
     primaryText: 'Students',
-    icon: 'face'
+    icon: 'face',
+    linkUrl: '/students'
   },
   {
     primaryText: 'Planning',
-    icon: 'calendar_today'
+    icon: 'calendar_today',
+    linkUrl: '/planning'
   },
   {
     primaryText: 'Report Card',
-    icon: 'assessment'
+    icon: 'assessment',
+    linkUrl: '/reports'
   },
   {
     primaryText: 'Teachers',
-    icon: 'person'
+    icon: 'person',
+    linkUrl: '/teachers'
   },
   {
     primaryText: 'Payroll',
-    icon: 'account_balance'
+    icon: 'account_balance',
+    linkUrl: '/payrolls'
   },
   {
     primaryText: 'Management Report',
-    icon: 'trending_up'
+    icon: 'trending_up',
+    linkUrl: '/management'
   }
 ];
 
-const NavContentEx = ({ parentCallBack }) => {
+// const NavContentEx = ({ parentCallBack }) => {
+const NavContentEx = () => {
   return (
     <List>
       {list.map(({ primaryText, icon, linkUrl }, i) => (
@@ -53,9 +64,11 @@ const NavContentEx = ({ parentCallBack }) => {
           key={primaryText}
           selected={i === 0}
           button
-          onClick={() => {
-            parentCallBack(i);
-          }}
+          // onClick={() => {
+          //   parentCallBack(i);
+          // }}
+          component={Link}
+          to={linkUrl}
         >
           <ListItemIcon>
             <Icon>{icon}</Icon>

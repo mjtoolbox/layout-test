@@ -13,11 +13,11 @@ import ContentEx from './components/ContentEx';
 import FooterEx from './components/FooterEx';
 
 import Main from './components/Main';
-import Teacher from './components/Teachers';
+import TeacherList from './components/teacher/TeacherList';
+import TeacherEdit from './components/teacher/TeacherEdit';
+import TeacherCreate from './components/teacher/TeacherCreate';
 
 import './styles.css';
-import TeacherEdit from './components/TeacherEdit';
-import TeacherCreate from './components/TeacherCreate';
 
 function App() {
   const [preset, setPreset] = useState('createStandardLayout');
@@ -27,22 +27,22 @@ function App() {
     content: true,
     footer: true
   });
-  const [index, setIndex] = useState(6);
+  // const [index, setIndex] = useState(6);
 
-  function RenderContent(index) {
-    switch (index) {
-      case 0:
-        return <Main />;
-      case 6:
-        return <Teacher />;
-      default:
-        return <ContentEx />;
-    }
-  }
+  // function RenderContent(index) {
+  //   switch (index) {
+  //     case 0:
+  //       return <Main />;
+  //     case 6:
+  //       return <TeacherList />;
+  //     default:
+  //       return <ContentEx />;
+  //   }
+  // }
 
-  const callback = index => {
-    setIndex(index);
-  };
+  // const callback = index => {
+  //   setIndex(index);
+  // };
 
   return (
     <MuiThemeProvider theme={createMuiTheme()}>
@@ -68,13 +68,18 @@ function App() {
             data.nav && <NavHeaderEx collapsed={collapsed} />
           }
         >
-          {data.nav && <NavContentEx parentCallBack={callback} />}
+          {/* {data.nav && <NavContentEx parentCallBack={callback} />} */}
+          {data.nav && <NavContentEx />}
         </Nav>
         <Content>
-          {RenderContent(index)}
-          <Route exact path='/create' component={<TeacherCreate />} />
-          <Route path='/edit/:teacher_id' component={<TeacherEdit />} />
-          <Route path='/teachers' component={<Teacher />} />
+          {/* {RenderContent(index)} */}
+          <div className='mt-3 mb-3 ml-2 mr-2'>
+            <Switch>
+              <Route exact path='/create' component={TeacherCreate} />
+              <Route path='/teachers/:teacher_id' component={TeacherEdit} />
+              <Route path='/teachers' component={TeacherList} />
+            </Switch>
+          </div>
         </Content>
         <Footer>{data.footer && <FooterEx />}</Footer>
       </Root>

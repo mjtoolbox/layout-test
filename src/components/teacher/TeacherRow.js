@@ -33,7 +33,7 @@ export default class TeacherRow extends Component {
         <td>{updatedDate}</td>
         <td>
           <Link
-            to={'/edit/' + this.props.obj.teacher_id}
+            to={'/teachers/' + this.props.obj.teacher_id}
             className='btn btn-primary'
           >
             Edit
