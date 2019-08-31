@@ -19,7 +19,7 @@ export default class TeacherRow extends Component {
 
   render() {
     const startDate = moment(this.props.obj.start_date).format('YYYY-MM-DD');
-    const updatedDate = moment(this.props.obj.last_upate).format(
+    const updatedDate = moment(this.props.obj.last_update).format(
       'YYYY-MM-DD HH:MM'
     );
 
