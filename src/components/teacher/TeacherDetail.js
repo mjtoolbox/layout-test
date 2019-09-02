@@ -196,7 +196,7 @@ export default class TeacherDetail extends Component {
             to={
               '/teachers/' + this.props.location.state.teacherProps.teacher_id
             }
-            className='btn btn-primary'
+            className='btn btn-primary btn-sm'
           >
             Edit
           </Link>

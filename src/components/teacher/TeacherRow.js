@@ -40,7 +40,7 @@ export default class TeacherRow extends Component {
                 teacherProps: this.props.obj
               }
             }}
-            className='btn btn-primary'
+            className='btn btn-primary btn-sm'
           >
             View Detail
           </Link>
@@ -48,13 +48,13 @@ export default class TeacherRow extends Component {
         <td>
           <Link
             to={'/teachers/' + this.props.obj.teacher_id}
-            className='btn btn-primary'
+            className='btn btn-primary btn-sm'
           >
             Edit
           </Link>
         </td>
         <td>
-          <button onClick={this.delete} className='btn btn-danger'>
+          <button onClick={this.delete} className='btn btn-danger btn-sm'>
             Delete
           </button>
         </td>

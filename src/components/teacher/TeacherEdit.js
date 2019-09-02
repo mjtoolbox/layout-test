@@ -337,7 +337,7 @@ export default class TeacherEdit extends Component {
             <input
               type='submit'
               value='Update Teacher'
-              className='btn btn-primary'
+              className='btn btn-primary btn-sm'
             />
           </CardActions>
         </form>

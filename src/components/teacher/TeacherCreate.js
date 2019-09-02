@@ -295,7 +295,7 @@ export default class TeacherCreate extends Component {
             <input
               type='submit'
               value='Submit Teacher'
-              className='btn btn-primary'
+              className='btn btn-primary btn-sm'
             />
           </CardActions>
         </form>
