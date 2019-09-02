@@ -56,7 +56,7 @@ export default class TeacherCreate extends Component {
       city: '',
       province: '',
       postal_code: '',
-      status: '',
+      status: 'active',
       end_date: ''
     };
   }
@@ -219,7 +219,7 @@ export default class TeacherCreate extends Component {
                   required
                   label='Status'
                   margin='dense'
-                  value={this.state.status}
+                  value='active'
                   onChange={this.onChangeStatus}
                   variant='outlined'
                 />
