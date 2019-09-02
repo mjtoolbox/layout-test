@@ -33,12 +33,26 @@ export default class TeacherDetail extends Component {
   // }
 
   render() {
+    function formatEndDate(date) {
+      let returnDate = 'n/a';
+      if (date != null) {
+        returnDate = moment(date).format('YYYY-MM-DD');
+      }
+      return returnDate;
+    }
+
     const startDate = moment(
       this.props.location.state.teacherProps.start_date
     ).format('YYYY-MM-DD');
+
+    const endDate = formatEndDate(
+      this.props.location.state.teacherProps.end_date
+    );
+
     const updatedDate = moment(
       this.props.location.state.teacherProps.last_update
     ).format('YYYY-MM-DD HH:MM');
+    
     return (
       <Card>
         <CardHeader
@@ -60,7 +74,7 @@ export default class TeacherDetail extends Component {
                 variant='outlined'
               />
             </Grid>
-            <Grid item md={6} xs={12}>
+            <Grid item md={4} xs={12}>
               <TextField
                 disabled
                 fullWidth
@@ -88,6 +102,16 @@ export default class TeacherDetail extends Component {
                 label='Level'
                 margin='dense'
                 value={this.props.location.state.teacherProps.level}
+                variant='outlined'
+              />
+            </Grid>
+            <Grid item md={2} xs={12}>
+              <TextField
+                disabled
+                fullWidth
+                label='Status'
+                margin='dense'
+                value={this.props.location.state.teacherProps.status}
                 variant='outlined'
               />
             </Grid>
@@ -134,6 +158,16 @@ export default class TeacherDetail extends Component {
                 label='Start Date'
                 margin='dense'
                 value={startDate}
+                variant='outlined'
+              />
+            </Grid>
+            <Grid item md={2} xs={12}>
+              <TextField
+                disabled
+                fullWidth
+                label='End Date'
+                margin='dense'
+                value={endDate}
                 variant='outlined'
               />
             </Grid>

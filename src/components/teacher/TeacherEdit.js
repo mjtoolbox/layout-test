@@ -36,6 +36,8 @@ export default class TeacherEdit extends Component {
     this.onChangeProvince = this.onChangeProvince.bind(this);
     this.onChangeProvince = this.onChangeProvince.bind(this);
     this.onChangePostalCode = this.onChangePostalCode.bind(this);
+    this.onChangeStatus = this.onChangeStatus.bind(this);
+    this.onChangeEndDate = this.onChangeEndDate.bind(this);
 
     this.onSubmit = this.onSubmit.bind(this);
 
@@ -52,7 +54,9 @@ export default class TeacherEdit extends Component {
       city: '',
       province: '',
       postal_code: '',
-      last_update: ''
+      last_update: '',
+      status: '',
+      end_date: ''
     };
   }
 
@@ -77,7 +81,9 @@ export default class TeacherEdit extends Component {
           city: response.data.city,
           province: response.data.province,
           postal_code: response.data.postal_code,
-          last_update: response.data.last_update
+          last_update: response.data.last_update,
+          status: response.data.status,
+          end_date: response.data.end_date
         });
         // }
       })
@@ -155,6 +161,17 @@ export default class TeacherEdit extends Component {
       postal_code: e.target.value
     });
   }
+  onChangeStatus(e) {
+    this.setState({
+      status: e.target.value
+    });
+  }
+
+  onChangeEndDate(e) {
+    this.setState({
+      end_date: e.target.value
+    });
+  }
 
   onSubmit(e) {
     e.preventDefault();
@@ -169,7 +186,9 @@ export default class TeacherEdit extends Component {
       address: this.state.address,
       city: this.state.city,
       province: this.state.province,
-      postal_code: this.state.postal_code
+      postal_code: this.state.postal_code,
+      status: this.state.status,
+      end_date: this.state.end_date
     };
     axios
       .put('http://localhost:8080/teachers/' + this.state.teacher_id, obj)
@@ -182,7 +201,17 @@ export default class TeacherEdit extends Component {
   }
 
   render() {
+    function formatEndDate(date) {
+      let returnDate = 'n/a';
+      if (date != null) {
+        returnDate = moment(date).format('YYYY-MM-DD');
+      }
+      return returnDate;
+    }
+
     const startDate = moment(this.state.start_date).format('YYYY-MM-DD');
+    const endDate = formatEndDate(this.state.end_date);
+
     const updatedDate = moment(this.state.last_update).format(
       'YYYY-MM-DD HH:MM'
     );
@@ -275,11 +304,23 @@ export default class TeacherEdit extends Component {
               </Grid>
               <Grid item md={2} xs={12}>
                 <TextField
+                  helperText='e.g. yyyy-mm-dd'
                   fullWidth
                   label='Start Date'
                   margin='dense'
                   value={startDate}
                   onChange={this.onChangeStartDate}
+                  variant='outlined'
+                />
+              </Grid>
+              <Grid item md={2} xs={12}>
+                <TextField
+                  helperText='e.g. yyyy-mm-dd'
+                  fullWidth
+                  label='End Date'
+                  margin='dense'
+                  value={endDate}
+                  onChange={this.onChangeEndDate}
                   variant='outlined'
                 />
               </Grid>

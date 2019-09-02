@@ -38,6 +38,8 @@ export default class TeacherCreate extends Component {
     this.onChangeProvince = this.onChangeProvince.bind(this);
     this.onChangeProvince = this.onChangeProvince.bind(this);
     this.onChangePostalCode = this.onChangePostalCode.bind(this);
+    this.onChangeStatus = this.onChangeStatus.bind(this);
+    this.onChangeEndDate = this.onChangeEndDate.bind(this);
 
     this.onSubmit = this.onSubmit.bind(this);
 
@@ -53,7 +55,9 @@ export default class TeacherCreate extends Component {
       address: '',
       city: '',
       province: '',
-      postal_code: ''
+      postal_code: '',
+      status: '',
+      end_date: ''
     };
   }
 
@@ -77,7 +81,6 @@ export default class TeacherCreate extends Component {
 
   onChangeStartDate(date) {
     const startDate = moment(date).format('YYYY-MM-DD');
-    console.log(startDate);
     this.setState({
       start_date: startDate
     });
@@ -125,6 +128,18 @@ export default class TeacherCreate extends Component {
     });
   }
 
+  onChangeStatus(e) {
+    this.setState({
+      status: e.target.value
+    });
+  }
+  onChangeEndDate(date) {
+    const endDate = moment(date).format('YYYY-MM-DD');
+    this.setState({
+      end_date: endDate
+    });
+  }
+
   onSubmit(e) {
     e.preventDefault();
     const obj = {
@@ -138,7 +153,9 @@ export default class TeacherCreate extends Component {
       address: this.state.address,
       city: this.state.city,
       province: this.state.province,
-      postal_code: this.state.postal_code
+      postal_code: this.state.postal_code,
+      status: this.state.status,
+      end_date: this.state.end_date
     };
 
     axios
@@ -196,7 +213,17 @@ export default class TeacherCreate extends Component {
                   variant='outlined'
                 />
               </Grid>
-
+              <Grid item md={2} xs={12}>
+                <TextField
+                  fullWidth
+                  required
+                  label='Status'
+                  margin='dense'
+                  value={this.state.status}
+                  onChange={this.onChangeStatus}
+                  variant='outlined'
+                />
+              </Grid>
               <Grid item md={4} xs={12}>
                 <TextField
                   fullWidth
@@ -236,6 +263,7 @@ export default class TeacherCreate extends Component {
                 <Grid item md={2} xs={12}>
                   <KeyboardDatePicker
                     disableToolbar
+                    inputVariant='outlined'
                     variant='inline'
                     format='MM/dd/yyyy'
                     margin='normal'
