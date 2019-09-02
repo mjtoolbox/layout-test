@@ -1,38 +1,26 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import { spacing } from '@material-ui/system';
 import moment from 'moment';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Divider,
+  Grid,
+  Button,
+  TextField
+} from '@material-ui/core';
 
 const baseUrl = 'http://localhost:8080';
 
-const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap'
-  },
-  textField: {
-    marginLeft: theme.spacing(30),
-    marginRight: theme.spacing(50),
-    width: 400
-  },
-  dense: {
-    marginTop: 19
-  },
-  menu: {
-    width: 200
-  }
-});
-
 export default class TeacherEdit extends Component {
-  _isMounted = false;
+  // _isMounted = false;
 
   constructor(props) {
     super(props);
@@ -69,38 +57,38 @@ export default class TeacherEdit extends Component {
   }
 
   componentDidMount() {
-    this._isMounted = true;
+    // this._isMounted = true;
     axios
       .get(
         'http://localhost:8080/teachers/' + this.props.match.params.teacher_id
       )
       .then(response => {
-        if (this._isMounted) {
-          this.setState({
-            teacher_id: response.data.teacher_id,
-            teacher_name: response.data.teacher_name,
-            subjects: response.data.subjects,
-            level: response.data.level,
-            start_date: response.data.start_date,
-            cell_phone: response.data.cell_phone,
-            email: response.data.email,
-            home_phone: response.data.home_phone,
-            address: response.data.address,
-            city: response.data.city,
-            province: response.data.province,
-            postal_code: response.data.postal_code,
-            last_update: response.data.last_update
-          });
-        }
+        // if (this._isMounted) {
+        this.setState({
+          teacher_id: response.data.teacher_id,
+          teacher_name: response.data.teacher_name,
+          subjects: response.data.subjects,
+          level: response.data.level,
+          start_date: response.data.start_date,
+          cell_phone: response.data.cell_phone,
+          email: response.data.email,
+          home_phone: response.data.home_phone,
+          address: response.data.address,
+          city: response.data.city,
+          province: response.data.province,
+          postal_code: response.data.postal_code,
+          last_update: response.data.last_update
+        });
+        // }
       })
       .catch(function(error) {
         console.log(error);
       });
   }
 
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
+  // componentWillUnmount() {
+  //   this._isMounted = false;
+  // }
 
   onChangeName(e) {
     this.setState({
@@ -187,6 +175,9 @@ export default class TeacherEdit extends Component {
       .put('http://localhost:8080/teachers/' + this.state.teacher_id, obj)
       .then(res => {
         this.props.history.push('/teachers');
+      })
+      .catch(function(error) {
+        console.log(error);
       });
   }
 
@@ -197,163 +188,160 @@ export default class TeacherEdit extends Component {
     );
 
     return (
-      <div style={{ marginTop: 10 }}>
-        <h3 align='center'>Update Teacher</h3>
-        <form className={styles.container} onSubmit={this.onSubmit}>
-          <TextField
-            disabled
-            id='outlined-disabled'
-            label='ID'
-            className={styles.textField}
-            value={this.state.teacher_id}
-            margin='normal'
-            variant='outlined'
-            pr={500}
+      <Card>
+        <form onSubmit={this.onSubmit}>
+          <CardHeader
+            style={{ textAlign: 'center' }}
+            subheader='Viewing details'
+            title='Update Teacher Information'
           />
-          <br />
-          <TextField
-            id='outlined-name'
-            label='Name'
-            className={styles.textField}
-            value={this.state.teacher_name}
-            onChange={this.onChangeName}
-            margin='normal'
-            variant='outlined'
-          />
-          <br />
-          <TextField
-            id='outlined-name'
-            label='Subject'
-            className={styles.textField}
-            value={this.state.subjects}
-            onChange={this.onChangeSubject}
-            margin='normal'
-            variant='outlined'
-          />
-          <br />
-          <TextField
-            id='outlined-name'
-            label='level'
-            className={styles.textField}
-            value={this.state.level}
-            onChange={this.onChangeLevel}
-            margin='normal'
-            variant='outlined'
-          />
-          <br />
-          <TextField
-            id='outlined-name'
-            label='start date'
-            className={styles.textField}
-            value={startDate}
-            onChange={this.onChangeStartDate}
-            margin='normal'
-            variant='outlined'
-          />
-          <br />
-          <TextField
-            id='outlined-name'
-            label='cell phone'
-            className={styles.textField}
-            value={this.state.cell_phone}
-            onChange={this.onChangeCellPhone}
-            margin='normal'
-            variant='outlined'
-          />
-          <br />
-          <TextField
-            id='outlined-name'
-            label='email'
-            className={styles.textField}
-            value={this.state.email}
-            onChange={this.onChangeEmail}
-            margin='normal'
-            variant='outlined'
-          />
-          <br />
-          <TextField
-            id='outlined-name'
-            label='home phone'
-            className={styles.textField}
-            value={this.state.home_phone}
-            onChange={this.onChangeHomePhone}
-            margin='normal'
-            variant='outlined'
-          />
-          <br />
-          <TextField
-            id='outlined-name'
-            label='address'
-            className={styles.textField}
-            value={this.state.address}
-            onChange={this.onChangeAddress}
-            margin='normal'
-            variant='outlined'
-          />
-          <br />
-          <TextField
-            id='outlined-name'
-            label='city'
-            className={styles.textField}
-            value={this.state.city}
-            onChange={this.onChangeCity}
-            margin='normal'
-            variant='outlined'
-          />
-          <br />
-          <FormControl className={styles.formControl}>
-            <InputLabel htmlFor='province'>Province</InputLabel>
-            <Select
-              value={this.state.province}
-              onChange={this.onChangeProvince}
-              inputProps={{
-                name: 'province',
-                id: 'province'
-              }}
-            >
-              <MenuItem value='BC'>BC</MenuItem>
-              <MenuItem value='AB'>AB</MenuItem>
-            </Select>
-          </FormControl>
-          {/* <TextField
-            id='outlined-name'
-            label='province'
-            className={styles.textField}
-            value={this.state.province}
-            onChange={this.onChangeProvince}
-            margin='normal'
-            variant='outlined'
-          /> */}
-          <br />
-          <TextField
-            id='outlined-name'
-            label='postal code'
-            className={styles.textField}
-            value={this.state.postal_code}
-            onChange={this.onChangePostalCode}
-            margin='normal'
-            variant='outlined'
-          />
-          <br />
-          <TextField
-            disabled
-            id='outlined-disabled'
-            label='last updated'
-            className={styles.textField}
-            value={updatedDate}
-            margin='normal'
-            variant='outlined'
-          />
+          <Divider />
+          <CardContent>
+            <Grid container spacing={3}>
+              <Grid item md={2} xs={12}>
+                <TextField
+                  disabled
+                  fullWidth
+                  label='ID'
+                  margin='dense'
+                  required
+                  value={this.state.teacher_id}
+                  variant='outlined'
+                />
+              </Grid>
+              <Grid item md={6} xs={12}>
+                <TextField
+                  fullWidth
+                  label='Name'
+                  margin='dense'
+                  required
+                  value={this.state.teacher_name}
+                  onChange={this.onChangeName}
+                  variant='outlined'
+                />
+              </Grid>
+              <Grid item md={2} xs={12}>
+                <TextField
+                  fullWidth
+                  label='Subject'
+                  margin='dense'
+                  value={this.state.subjects}
+                  onChange={this.onChangeSubject}
+                  variant='outlined'
+                />
+              </Grid>
+              <Grid item md={2} xs={12}>
+                <TextField
+                  fullWidth
+                  label='Level'
+                  margin='dense'
+                  value={this.state.level}
+                  onChange={this.onChangeLevel}
+                  variant='outlined'
+                />
+              </Grid>
 
-          <div className='form-group'>
+              <Grid item md={4} xs={12}>
+                <TextField
+                  fullWidth
+                  label='Email'
+                  margin='dense'
+                  value={this.state.email}
+                  onChange={this.onChangeEmail}
+                  variant='outlined'
+                />
+              </Grid>
+              <Grid item md={2} xs={12}>
+                <TextField
+                  helperText='e.g. 123-555-5555'
+                  fullWidth
+                  label='Cell Phone'
+                  margin='dense'
+                  value={this.state.cell_phone || 'n/a'}
+                  onChange={this.onChangeCellPhone}
+                  variant='outlined'
+                />
+              </Grid>
+
+              <Grid item md={2} xs={12}>
+                <TextField
+                  fullWidth
+                  label='Home Phone'
+                  margin='dense'
+                  value={this.state.home_phone || 'n/a'}
+                  onChange={this.onChangeHomePhone}
+                  variant='outlined'
+                />
+              </Grid>
+              <Grid item md={2} xs={12}>
+                <TextField
+                  fullWidth
+                  label='Start Date'
+                  margin='dense'
+                  value={startDate}
+                  onChange={this.onChangeStartDate}
+                  variant='outlined'
+                />
+              </Grid>
+              <Grid item md={4} xs={12}>
+                <TextField
+                  fullWidth
+                  label='Address'
+                  margin='dense'
+                  value={this.state.address}
+                  onChange={this.onChangeAddress}
+                  variant='outlined'
+                />
+              </Grid>
+              <Grid item md={2} xs={12}>
+                <TextField
+                  fullWidth
+                  label='City'
+                  margin='dense'
+                  value={this.state.city}
+                  onChange={this.onChangeCity}
+                  variant='outlined'
+                />
+              </Grid>
+              <Grid item md={2} xs={12}>
+                <FormControl>
+                  <InputLabel htmlFor='province'>Province</InputLabel>
+                  <Select
+                    value={this.state.province}
+                    onChange={this.onChangeProvince}
+                    inputProps={{
+                      name: 'province',
+                      id: 'province'
+                    }}
+                  >
+                    <MenuItem value='BC'>BC</MenuItem>
+                    <MenuItem value='AB'>AB</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item md={2} xs={12}>
+                <TextField
+                  disabled
+                  fullWidth
+                  label='Last Updated'
+                  margin='dense'
+                  value={updatedDate}
+                  variant='outlined'
+                />
+              </Grid>
+            </Grid>
+          </CardContent>
+          <Divider />
+          <CardActions>
             <input
               type='submit'
               value='Update Teacher'
               className='btn btn-primary'
             />
-          </div>
+          </CardActions>
         </form>
-      </div>
+      </Card>
     );
   }
 }

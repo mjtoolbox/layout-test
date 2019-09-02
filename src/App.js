@@ -16,6 +16,7 @@ import Main from './components/Main';
 import TeacherList from './components/teacher/TeacherList';
 import TeacherEdit from './components/teacher/TeacherEdit';
 import TeacherCreate from './components/teacher/TeacherCreate';
+import TeacherDetail from './components/teacher/TeacherDetail';
 
 import './styles.css';
 
@@ -75,9 +76,10 @@ function App() {
           {/* {RenderContent(index)} */}
           <div className='mt-3 mb-3 ml-2 mr-2'>
             <Switch>
-              <Route exact path='/create' component={TeacherCreate} />
+              <Route exact path='/teachercreate' component={TeacherCreate} />
               <Route path='/teachers/:teacher_id' component={TeacherEdit} />
               <Route path='/teachers' component={TeacherList} />
+              <Route path='/teacherdetail' component={TeacherDetail} />
             </Switch>
           </div>
         </Content>

@@ -33,6 +33,20 @@ export default class TeacherRow extends Component {
         <td>{updatedDate}</td>
         <td>
           <Link
+            to={{
+              pathname: '/teacherdetail',
+              state: {
+                // teacherProps: this.props.obj.teacher_name
+                teacherProps: this.props.obj
+              }
+            }}
+            className='btn btn-primary'
+          >
+            View Detail
+          </Link>
+        </td>
+        <td>
+          <Link
             to={'/teachers/' + this.props.obj.teacher_id}
             className='btn btn-primary'
           >
