@@ -13,6 +13,7 @@ import ContentEx from './components/ContentEx';
 import FooterEx from './components/FooterEx';
 
 import Main from './components/Main';
+import Login from './components/Login'
 import TeacherList from './components/teacher/TeacherList';
 import TeacherEdit from './components/teacher/TeacherEdit';
 import TeacherCreate from './components/teacher/TeacherCreate';
@@ -76,6 +77,8 @@ function App() {
           {/* {RenderContent(index)} */}
           <div className='mt-3 mb-3 ml-2 mr-2'>
             <Switch>
+              <Route path="/" exact component={Login}/>
+              <Route path="/login" exact component={Login}/>
               <Route exact path='/teachercreate' component={TeacherCreate} />
               <Route path='/teachers/:teacher_id' component={TeacherEdit} />
               <Route path='/teachers' component={TeacherList} />

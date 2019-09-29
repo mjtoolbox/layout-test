@@ -6,6 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import DateFnsUtils from '@date-io/date-fns';
 import {
   Card,
   CardHeader,
@@ -16,6 +17,11 @@ import {
   Button,
   TextField
 } from '@material-ui/core';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+  DatePicker
+} from '@material-ui/pickers';
 
 const baseUrl = 'http://localhost:8080';
 
@@ -92,9 +98,9 @@ export default class TeacherEdit extends Component {
       });
   }
 
-  // componentWillUnmount() {
-  //   this._isMounted = false;
-  // }
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
 
   onChangeName(e) {
     this.setState({
@@ -114,9 +120,11 @@ export default class TeacherEdit extends Component {
     });
   }
 
-  onChangeStartDate(e) {
+  onChangeStartDate(date) {
+    const startDate = moment(date).format('YYYY-MM-DD HH:mm:ss');
+    console.log(startDate);
     this.setState({
-      start_date: e.target.value
+      start_date: date
     });
   }
 
@@ -167,9 +175,10 @@ export default class TeacherEdit extends Component {
     });
   }
 
-  onChangeEndDate(e) {
+  onChangeEndDate(date) {
+    const endDate = moment(date).format('YYYY-MM-DD');
     this.setState({
-      end_date: e.target.value
+      end_date: endDate
     });
   }
 
@@ -201,20 +210,44 @@ export default class TeacherEdit extends Component {
   }
 
   render() {
-    function formatEndDate(date) {
-      let returnDate = 'n/a';
-      if (date != null) {
-        returnDate = moment(date).format('YYYY-MM-DD');
-      }
-      return returnDate;
-    }
-
     const startDate = moment(this.state.start_date).format('YYYY-MM-DD');
-    const endDate = formatEndDate(this.state.end_date);
-
     const updatedDate = moment(this.state.last_update).format(
       'YYYY-MM-DD HH:MM'
     );
+
+    let datepicker;
+    if (this.state.status !== 'active') {
+      datepicker = (
+        <Grid item md={2} xs={12}>
+          <KeyboardDatePicker
+            disableToolbar
+            disabled
+            inputVariant='outlined'
+            variant='inline'
+            format='yyyy/MM/dd'
+            margin='normal'
+            label='End Date picker'
+            value={this.state.end_date}
+            onChange={date => this.onChangeEndDate(date)}
+          />
+        </Grid>
+      );
+    } else {
+      datepicker = (
+        <Grid item md={2} xs={12}>
+          <KeyboardDatePicker
+            disableToolbar
+            inputVariant='outlined'
+            variant='inline'
+            format='yyyy/MM/dd'
+            margin='normal'
+            label='End Date picker'
+            value={this.state.end_date}
+            onChange={date => this.onChangeEndDate(date)}
+          />
+        </Grid>
+      );
+    }
 
     return (
       <Card>
@@ -238,7 +271,7 @@ export default class TeacherEdit extends Component {
                   variant='outlined'
                 />
               </Grid>
-              <Grid item md={6} xs={12}>
+              <Grid item md={4} xs={12}>
                 <TextField
                   fullWidth
                   label='Name'
@@ -269,7 +302,16 @@ export default class TeacherEdit extends Component {
                   variant='outlined'
                 />
               </Grid>
-
+              <Grid item md={2} xs={12}>
+                <TextField
+                  fullWidth
+                  label='Status'
+                  margin='dense'
+                  value={this.state.status}
+                  onChange={this.onChangeStatus}
+                  variant='outlined'
+                />
+              </Grid>
               <Grid item md={4} xs={12}>
                 <TextField
                   fullWidth
@@ -291,7 +333,6 @@ export default class TeacherEdit extends Component {
                   variant='outlined'
                 />
               </Grid>
-
               <Grid item md={2} xs={12}>
                 <TextField
                   fullWidth
@@ -302,28 +343,34 @@ export default class TeacherEdit extends Component {
                   variant='outlined'
                 />
               </Grid>
-              <Grid item md={2} xs={12}>
-                <TextField
-                  helperText='e.g. yyyy-mm-dd'
-                  fullWidth
-                  label='Start Date'
-                  margin='dense'
-                  value={startDate}
-                  onChange={this.onChangeStartDate}
-                  variant='outlined'
-                />
-              </Grid>
-              <Grid item md={2} xs={12}>
-                <TextField
-                  helperText='e.g. yyyy-mm-dd'
-                  fullWidth
-                  label='End Date'
-                  margin='dense'
-                  value={endDate}
-                  onChange={this.onChangeEndDate}
-                  variant='outlined'
-                />
-              </Grid>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid item md={2} xs={12}>
+                  <DatePicker
+                    disableToolbar
+                    inputVariant='outlined'
+                    variant='inline'
+                    format='yyyy/MM/dd'
+                    margin='normal'
+                    required
+                    label='Start Date picker'
+                    value={startDate}
+                    onChange={date => this.onChangeStartDate(date)}
+                  />
+                </Grid>
+
+                {datepicker}
+                {/* <KeyboardDatePicker
+                    disableToolbar
+                    inputVariant='outlined'
+                    variant='inline'
+                    format='yyyy/MM/dd'
+                    margin='normal'
+                    label='End Date picker'
+                    value={this.state.end_date || '2050-12-31'}
+                    onChange={date => this.onChangeEndDate(date)}
+                  /> */}
+              </MuiPickersUtilsProvider>
+
               <Grid item md={4} xs={12}>
                 <TextField
                   fullWidth

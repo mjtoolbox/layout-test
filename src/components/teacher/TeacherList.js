@@ -5,16 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardActions,
-  Divider,
-  Grid,
-  Button,
-  TextField
-} from '@material-ui/core';
+import { Card, CardHeader } from '@material-ui/core';
 
 const baseUrl = 'http://localhost:8080';
 
@@ -28,7 +19,12 @@ export default class TeacherList extends React.Component {
 
   componentDidMount() {
     axios
-      .get(baseUrl + '/teachers')
+      .get(baseUrl + '/teachers', {
+        auth: {
+          username: 'mymy',
+          password: 'hello'
+        }
+      })
       .then(response => {
         this.setState({ teachers: response.data });
       })
