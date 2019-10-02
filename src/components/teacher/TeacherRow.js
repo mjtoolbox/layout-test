@@ -27,14 +27,14 @@ export default class TeacherRow extends Component {
       <tr>
         <td>{this.props.obj.teacher_id}</td>
         <td>{this.props.obj.teacher_name}</td>
-        <td>{this.props.obj.subjects}</td>
+        <td>{this.props.obj.subject}</td>
         <td>{this.props.obj.level}</td>
         <td>{startDate}</td>
         <td>{updatedDate}</td>
         <td>
           <Link
             to={{
-              pathname: '/teacherdetail',
+              pathname: '/oss/teacherdetail',
               state: {
                 // teacherProps: this.props.obj.teacher_name
                 teacherProps: this.props.obj
@@ -47,7 +47,7 @@ export default class TeacherRow extends Component {
         </td>
         <td>
           <Link
-            to={'/teachers/' + this.props.obj.teacher_id}
+            to={'/oss/teacheredit/' + this.props.obj.teacher_id}
             className='btn btn-primary btn-sm'
           >
             Edit

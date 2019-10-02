@@ -52,7 +52,7 @@ export default class TeacherList extends React.Component {
                 aria-label='add'
                 color='primary'
                 component={Link}
-                to='/teachercreate'
+                to='/oss/teachercreate'
               >
                 <AddIcon />
               </IconButton>

@@ -8,6 +8,7 @@ import {
   Grid,
   TextField
 } from '@material-ui/core';
+import Button from 'react-bootstrap/Button';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
@@ -52,7 +53,7 @@ export default class TeacherDetail extends Component {
     const updatedDate = moment(
       this.props.location.state.teacherProps.last_update
     ).format('YYYY-MM-DD HH:MM');
-    
+
     return (
       <Card>
         <CardHeader
@@ -91,7 +92,7 @@ export default class TeacherDetail extends Component {
                 fullWidth
                 label='Subject'
                 margin='dense'
-                value={this.props.location.state.teacherProps.subjects}
+                value={this.props.location.state.teacherProps.subject}
                 variant='outlined'
               />
             </Grid>
@@ -228,12 +229,20 @@ export default class TeacherDetail extends Component {
         <CardActions>
           <Link
             to={
-              '/teachers/' + this.props.location.state.teacherProps.teacher_id
+              '/oss/teacheredit/' +
+              this.props.location.state.teacherProps.teacher_id
             }
             className='btn btn-primary btn-sm'
           >
             Edit
           </Link>
+          <Button
+            title='Cancel'
+            className='btn btn-primary btn-sm'
+            onClick={() => this.props.history.goBack()}
+          >
+            Cancel
+          </Button>
         </CardActions>
       </Card>
     );

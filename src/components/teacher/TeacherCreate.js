@@ -13,7 +13,6 @@ import {
   CardActions,
   Divider,
   Grid,
-  Button,
   TextField
 } from '@material-ui/core';
 import {
@@ -46,7 +45,7 @@ export default class TeacherCreate extends Component {
     this.state = {
       teacher_id: '',
       teacher_name: '',
-      subjects: '',
+      subject: '',
       level: '',
       start_date: new Date(),
       cell_phone: '',
@@ -69,7 +68,7 @@ export default class TeacherCreate extends Component {
 
   onChangeSubject(e) {
     this.setState({
-      subjects: e.target.value
+      subject: e.target.value
     });
   }
 
@@ -144,7 +143,7 @@ export default class TeacherCreate extends Component {
     e.preventDefault();
     const obj = {
       teacher_name: this.state.teacher_name,
-      subjects: this.state.subjects,
+      subject: this.state.subject,
       level: this.state.level,
       start_date: this.state.start_date,
       cell_phone: this.state.cell_phone,
@@ -159,9 +158,16 @@ export default class TeacherCreate extends Component {
     };
 
     axios
-      .post(baseUrl + '/teachers', obj)
+      // .post(baseUrl + '/teachers', obj)
+      // @Todo: Program number must be dynamic
+      .post(baseUrl + '/teachers/programs/10', obj, {
+        auth: {
+          username: 'mymy',
+          password: 'hello'
+        }
+      })
       .then(res => {
-        this.props.history.push('/teachers');
+        this.props.history.push('/oss/teachers');
       })
       .catch(function(error) {
         console.log(error);
@@ -197,7 +203,7 @@ export default class TeacherCreate extends Component {
                   required
                   label='Subject'
                   margin='dense'
-                  value={this.state.subjects}
+                  value={this.state.subject}
                   onChange={this.onChangeSubject}
                   variant='outlined'
                 />
@@ -315,6 +321,16 @@ export default class TeacherCreate extends Component {
                     <MenuItem value='AB'>AB</MenuItem>
                   </Select>
                 </FormControl>
+              </Grid>
+              <Grid item md={2} xs={12}>
+                <TextField
+                  fullWidth
+                  label='Postal Code'
+                  margin='dense'
+                  value={this.state.postal_code}
+                  onChange={this.onChangePostalCode}
+                  variant='outlined'
+                />
               </Grid>
             </Grid>
           </CardContent>

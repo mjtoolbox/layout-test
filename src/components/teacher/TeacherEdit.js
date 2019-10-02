@@ -3,10 +3,11 @@ import axios from 'axios';
 import MenuItem from '@material-ui/core/MenuItem';
 import moment from 'moment';
 import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import DateFnsUtils from '@date-io/date-fns';
+import Button from 'react-bootstrap/Button';
+
 import {
   Card,
   CardHeader,
@@ -14,7 +15,6 @@ import {
   CardActions,
   Divider,
   Grid,
-  Button,
   TextField
 } from '@material-ui/core';
 import {
@@ -50,7 +50,7 @@ export default class TeacherEdit extends Component {
     this.state = {
       teacher_id: '',
       teacher_name: '',
-      subjects: '',
+      subject: '',
       level: '',
       start_date: '',
       cell_phone: '',
@@ -69,15 +69,18 @@ export default class TeacherEdit extends Component {
   componentDidMount() {
     // this._isMounted = true;
     axios
-      .get(
-        'http://localhost:8080/teachers/' + this.props.match.params.teacher_id
-      )
+      .get(baseUrl + '/teachers/' + this.props.match.params.teacher_id, {
+        auth: {
+          username: 'mymy',
+          password: 'hello'
+        }
+      })
       .then(response => {
         // if (this._isMounted) {
         this.setState({
           teacher_id: response.data.teacher_id,
           teacher_name: response.data.teacher_name,
-          subjects: response.data.subjects,
+          subject: response.data.subject,
           level: response.data.level,
           start_date: response.data.start_date,
           cell_phone: response.data.cell_phone,
@@ -186,7 +189,7 @@ export default class TeacherEdit extends Component {
     e.preventDefault();
     const obj = {
       teacher_name: this.state.teacher_name,
-      subjects: this.state.subjects,
+      subject: this.state.subject,
       level: this.state.level,
       start_date: this.state.start_date,
       cell_phone: this.state.cell_phone,
@@ -287,7 +290,7 @@ export default class TeacherEdit extends Component {
                   fullWidth
                   label='Subject'
                   margin='dense'
-                  value={this.state.subjects}
+                  value={this.state.subject}
                   onChange={this.onChangeSubject}
                   variant='outlined'
                 />
@@ -407,7 +410,16 @@ export default class TeacherEdit extends Component {
                   </Select>
                 </FormControl>
               </Grid>
-
+              <Grid item md={2} xs={12}>
+                <TextField
+                  fullWidth
+                  label='Postal Code'
+                  margin='dense'
+                  value={this.state.postal_code}
+                  onChange={this.onChangePostalCode}
+                  variant='outlined'
+                />
+              </Grid>
               <Grid item md={2} xs={12}>
                 <TextField
                   disabled
@@ -427,6 +439,13 @@ export default class TeacherEdit extends Component {
               value='Update Teacher'
               className='btn btn-primary btn-sm'
             />
+            <Button
+              title='Cancel'
+              className='btn btn-primary btn-sm'
+              onClick={() => this.props.history.goBack()}
+            >
+              Cancel
+            </Button>
           </CardActions>
         </form>
       </Card>

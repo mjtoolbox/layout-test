@@ -11,12 +11,12 @@ const list = [
   {
     primaryText: 'Home',
     icon: 'home',
-    linkUrl: '/main'
+    linkUrl: '/oss/main'
   },
   {
     primaryText: 'Registration',
     icon: 'input',
-    linkUrl: '/registration'
+    linkUrl: '/oss/registration'
   },
   {
     primaryText: 'Programs',
@@ -26,32 +26,32 @@ const list = [
   {
     primaryText: 'Students',
     icon: 'face',
-    linkUrl: '/students'
+    linkUrl: '/oss/students'
   },
   {
     primaryText: 'Planning',
     icon: 'calendar_today',
-    linkUrl: '/planning'
+    linkUrl: '/oss/planning'
   },
   {
     primaryText: 'Report Card',
     icon: 'assessment',
-    linkUrl: '/reports'
+    linkUrl: '/oss/reports'
   },
   {
     primaryText: 'Teachers',
     icon: 'person',
-    linkUrl: '/teachers'
+    linkUrl: '/oss/teachers'
   },
   {
     primaryText: 'Payroll',
     icon: 'account_balance',
-    linkUrl: '/payrolls'
+    linkUrl: '/oss/payrolls'
   },
   {
     primaryText: 'Management Report',
     icon: 'trending_up',
-    linkUrl: '/management'
+    linkUrl: '/oss/management'
   }
 ];
 
