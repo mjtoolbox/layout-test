@@ -6,7 +6,7 @@ import Divider from '@material-ui/core/Divider';
 const FooterEx = () => (
   <div style={{ maxWidth: 700, margin: 'auto', textAlign: 'center' }}>
     <Typography variant='caption' align={'center'}>
-      © Copyright 2019 MJToolbox
+      © Copyright 2019 One Small Step
     </Typography>
     <Divider style={{ margin: '24px auto', width: 60 }} />
     <Grid container justify={'center'} spacing={2}>

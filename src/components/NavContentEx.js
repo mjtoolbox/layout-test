@@ -29,6 +29,11 @@ const list = [
     linkUrl: '/oss/students'
   },
   {
+    primaryText: 'Guardians',
+    icon: 'person',
+    linkUrl: '/oss/guardians'
+  },
+  {
     primaryText: 'Planning',
     icon: 'calendar_today',
     linkUrl: '/oss/planning'
@@ -40,7 +45,7 @@ const list = [
   },
   {
     primaryText: 'Teachers',
-    icon: 'person',
+    icon: 'school',
     linkUrl: '/oss/teachers'
   },
   {

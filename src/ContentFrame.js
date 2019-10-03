@@ -18,6 +18,14 @@ import TeacherEdit from './components/teacher/TeacherEdit';
 import TeacherCreate from './components/teacher/TeacherCreate';
 import TeacherDetail from './components/teacher/TeacherDetail';
 
+import Registration from './components/Registration';
+
+import GuardianList from './components/guardian/GuardianList';
+import GuardianCreate from './components/guardian/GuardianCreate';
+import GuardianEdit from './components/guardian/GuardianEdit';
+import GuardianDetail from './components/guardian/GuardianDetail';
+
+
 import './styles.css';
 
 import Login from './components/Login';
@@ -77,10 +85,27 @@ function ContentFrame() {
         <Content>
           {/* {RenderContent(index)} */}
           <div className='mt-3 mb-3 ml-2 mr-2'>
+            {/* Nagivation */}
+            <Route path='/oss/registration' component={Registration} />
+
+            {/* Teacher */}
             <Route exact path='/oss/teachercreate' component={TeacherCreate} />
-            <Route path='/oss/teacheredit/:teacher_id' component={TeacherEdit} />
+            <Route
+              path='/oss/teacheredit/:teacher_id'
+              component={TeacherEdit}
+            />
             <Route path='/oss/teachers' component={TeacherList} />
             <Route path='/oss/teacherdetail' component={TeacherDetail} />
+
+            {/* Guardian */}
+            <Route path='/oss/guardiancreate' component={GuardianCreate} />
+            <Route
+              path='/oss/guardianedit/:guardian_id'
+              component={GuardianEdit}
+            />
+            <Route path='/oss/guardians' component={GuardianList} />
+            <Route path='/oss/guardiandetail' component={GuardianDetail} />
+
           </div>
         </Content>
         <Footer>{data.footer && <FooterEx />}</Footer>
