@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 2)
   }
 }));
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -88,33 +89,6 @@ class Login extends Component {
 
   render() {
     return (
-      //   <div>
-      //     <h1>Login</h1>
-      //     <div className='container'>
-      //       {this.state.hasLoginFailed && (
-      //         <div className='alert alert-warning'>Invalid Credentials</div>
-      //       )}
-      //       {this.state.showSuccessMessage && <div>Login Sucessful</div>}
-      //       User Name:{' '}
-      //       <input
-      //         type='text'
-      //         name='username'
-      //         value={this.state.username}
-      //         onChange={this.handleChange}
-      //       />
-      //       Password:{' '}
-      //       <input
-      //         type='password'
-      //         name='password'
-      //         value={this.state.password}
-      //         onChange={this.handleChange}
-      //       />
-      //       <button className='btn btn-success' onClick={this.loginClicked}>
-      //         Login
-      //       </button>
-      //     </div>
-      //   </div>
-
       <Container component='main' maxWidth='xs'>
         <CssBaseline />
         <div className={useStyles.paper}>

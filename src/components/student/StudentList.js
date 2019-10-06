@@ -1,5 +1,5 @@
 import React from 'react';
-import GuardianRow from './GuardianRow';
+import StudentRow from './StudentRow';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import IconButton from '@material-ui/core/IconButton';
@@ -9,24 +9,24 @@ import { Card, CardHeader } from '@material-ui/core';
 
 const baseUrl = 'http://localhost:8080';
 
-export default class GuardianList extends React.Component {
+export default class StudentList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      guardians: []
+      students: []
     };
   }
 
   componentDidMount() {
     axios
-      .get(baseUrl + '/guardians', {
+      .get(baseUrl + '/students', {
         auth: {
           username: 'mymy',
           password: 'hello'
         }
       })
       .then(response => {
-        this.setState({ guardians: response.data });
+        this.setState({ students: response.data });
       })
       .catch(function(error) {
         console.log(error);
@@ -34,8 +34,8 @@ export default class GuardianList extends React.Component {
   }
 
   tabRow() {
-    return this.state.guardians.map(function(object, i) {
-      return <GuardianRow obj={object} key={i} />;
+    return this.state.students.map(function(object, i) {
+      return <StudentRow obj={object} key={i} />;
     });
   }
 
@@ -45,14 +45,14 @@ export default class GuardianList extends React.Component {
         <Card>
           <CardHeader
             style={{ textAlign: 'center' }}
-            subheader='Guardian information can be viewed, edited, or deleted'
-            title='Guardian List'
+            subheader='Student information can be viewed, edited, or deleted'
+            title='Student List'
             action={
               <IconButton
                 aria-label='add'
                 color='primary'
                 component={Link}
-                to='/oss/guardiancreate'
+                to='/oss/studentcreate'
               >
                 <AddIcon />
               </IconButton>
@@ -63,10 +63,12 @@ export default class GuardianList extends React.Component {
               <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Relationship</th>
-                <th>Student</th>
+                <th>Membership Type</th>
+                <th>Grade</th>
+                <th>Email</th>
                 <th>Registration Date</th>
-                <th colSpan='4'>Actions</th>
+                <th>Updated</th>
+                <th colSpan='3'>Actions</th>
               </tr>
             </thead>
             <tbody>{this.tabRow()}</tbody>

@@ -12,7 +12,12 @@ export default class TeacherRow extends Component {
   }
   delete() {
     axios
-      .delete(baseUrl + '/teachers/' + this.props.obj.teacher_id)
+      .delete(baseUrl + '/teachers/' + this.props.obj.teacher_id, {
+        auth: {
+          username: 'mymy',
+          password: 'hello'
+        }
+      })
       .then(res => console.log('deleted'))
       .catch(err => console.log(err));
   }

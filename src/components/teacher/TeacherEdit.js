@@ -203,7 +203,12 @@ export default class TeacherEdit extends Component {
       end_date: this.state.end_date
     };
     axios
-      .put('http://localhost:8080/teachers/' + this.state.teacher_id, obj)
+      .put('http://localhost:8080/teachers/' + this.state.teacher_id, obj, {
+        auth: {
+          username: 'mymy',
+          password: 'hello'
+        }
+      })
       .then(res => {
         this.props.history.push('/teachers');
       })

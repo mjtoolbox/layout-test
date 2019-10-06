@@ -128,7 +128,14 @@ export default class GuardianCreate extends Component {
         }
       })
       .then(res => {
-        this.props.history.push('/oss/guardians');
+        this.props.history.push(
+          {
+            pathname: '/oss/studentcreate',
+            state: {
+              guardian_id: res.data.guardian_id
+            }
+          }
+        );
       })
       .catch(function(error) {
         console.log(error);

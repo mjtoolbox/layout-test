@@ -25,6 +25,10 @@ import GuardianCreate from './components/guardian/GuardianCreate';
 import GuardianEdit from './components/guardian/GuardianEdit';
 import GuardianDetail from './components/guardian/GuardianDetail';
 
+import StudentList from './components//student/StudentList';
+import StudentCreate from './components/student/StudentCreate';
+import StudentEdit from './components/student/StudentEdit';
+import StudentDetail from './components/student/StudentDetail';
 
 import './styles.css';
 
@@ -38,22 +42,6 @@ function ContentFrame() {
     content: true,
     footer: true
   });
-  // const [index, setIndex] = useState(6);
-
-  // function RenderContent(index) {
-  //   switch (index) {
-  //     case 0:
-  //       return <Main />;
-  //     case 6:
-  //       return <TeacherList />;
-  //     default:
-  //       return <ContentEx />;
-  //   }
-  // }
-
-  // const callback = index => {
-  //   setIndex(index);
-  // };
 
   return (
     <MuiThemeProvider theme={createMuiTheme()}>
@@ -105,6 +93,15 @@ function ContentFrame() {
             />
             <Route path='/oss/guardians' component={GuardianList} />
             <Route path='/oss/guardiandetail' component={GuardianDetail} />
+
+            {/* Student */}
+            <Route
+              path='/oss/studentcreate/:guardian_id'
+              component={StudentCreate}
+            />
+            <Route path='/oss/students' component={StudentList} />
+            <Route path='/oss/studentdetail' component={StudentDetail} />
+            <Route path='/oss/studentedit' component={StudentEdit} />
 
           </div>
         </Content>

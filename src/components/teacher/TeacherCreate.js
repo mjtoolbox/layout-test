@@ -13,7 +13,9 @@ import {
   CardActions,
   Divider,
   Grid,
-  TextField
+  TextField,
+  withStyles,
+  OutlinedInput
 } from '@material-ui/core';
 import {
   MuiPickersUtilsProvider,
@@ -22,7 +24,21 @@ import {
 
 const baseUrl = 'http://localhost:8080';
 
-export default class TeacherCreate extends Component {
+const styles = theme => ({
+  button: {
+    display: 'block',
+    marginTop: theme.spacing.unit * 2
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 120
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2)
+  }
+});
+
+class TeacherCreate extends Component {
   constructor(props) {
     super(props);
     this.onChangeName = this.onChangeName.bind(this);
@@ -34,7 +50,6 @@ export default class TeacherCreate extends Component {
     this.onChangeHomePhone = this.onChangeHomePhone.bind(this);
     this.onChangeAddress = this.onChangeAddress.bind(this);
     this.onChangeCity = this.onChangeCity.bind(this);
-    this.onChangeProvince = this.onChangeProvince.bind(this);
     this.onChangeProvince = this.onChangeProvince.bind(this);
     this.onChangePostalCode = this.onChangePostalCode.bind(this);
     this.onChangeStatus = this.onChangeStatus.bind(this);
@@ -175,6 +190,8 @@ export default class TeacherCreate extends Component {
   }
 
   render() {
+    const { classes } = this.props;
+
     return (
       <Card>
         <form onSubmit={this.onSubmit}>
@@ -266,7 +283,7 @@ export default class TeacherCreate extends Component {
                 />
               </Grid>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Grid item md={2} xs={12}>
+                <Grid item md={3} xs={12}>
                   <KeyboardDatePicker
                     disableToolbar
                     inputVariant='outlined'
@@ -306,7 +323,7 @@ export default class TeacherCreate extends Component {
                 />
               </Grid>
               <Grid item md={2} xs={12}>
-                <FormControl variant='outlined'>
+                <FormControl variant='outlined' className={classes.formControl}>
                   <InputLabel htmlFor='province'>Province</InputLabel>
                   <Select
                     required
@@ -316,7 +333,13 @@ export default class TeacherCreate extends Component {
                       name: 'province',
                       id: 'province'
                     }}
+                    margin='dense'
+                    variant='outlined'
+                    input={<OutlinedInput labelWidth={80} />}
                   >
+                     <MenuItem value=''>
+                      <em>None</em>
+                    </MenuItem>
                     <MenuItem value='BC'>BC</MenuItem>
                     <MenuItem value='AB'>AB</MenuItem>
                   </Select>
@@ -347,3 +370,4 @@ export default class TeacherCreate extends Component {
     );
   }
 }
+export default withStyles(styles)(TeacherCreate);
