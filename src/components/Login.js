@@ -79,7 +79,7 @@ class Login extends Component {
           this.state.username,
           this.state.password
         );
-        this.props.history.push(`/oss`);
+        this.props.history.push('/oss');
       })
       .catch(() => {
         this.setState({ showSuccessMessage: false });
