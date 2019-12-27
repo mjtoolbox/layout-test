@@ -11,6 +11,7 @@ import NavHeaderEx from './components/NavHeaderEx';
 import HeaderEx from './components/HeaderEx';
 // import ContentEx from './components/ContentEx';
 import FooterEx from './components/FooterEx';
+import Main from './components/Main';
 
 // import Main from './components/Main';
 import TeacherList from './components/teacher/TeacherList';
@@ -73,36 +74,39 @@ function ContentFrame() {
         <Content>
           {/* {RenderContent(index)} */}
           <div className='mt-3 mb-3 ml-2 mr-2'>
+            <Route exact path='/' component={Main} />
+            <Route exact path='/oss' component={Main} />
+            <Route exact path='/oss/main' component={Main} />
+
             {/* Nagivation */}
-            <Route path='/oss/registration' component={Registration} />
+            <Route exact path='/oss/registration' component={Registration} />
 
             {/* Teacher */}
             <Route exact path='/oss/teachercreate' component={TeacherCreate} />
-            <Route
+            <Route exact
               path='/oss/teacheredit/:teacher_id'
               component={TeacherEdit}
             />
-            <Route path='/oss/teachers' component={TeacherList} />
-            <Route path='/oss/teacherdetail' component={TeacherDetail} />
+            <Route exact path='/oss/teachers' component={TeacherList} />
+            <Route exact path='/oss/teacherdetail' component={TeacherDetail} />
 
             {/* Guardian */}
-            <Route path='/oss/guardiancreate' component={GuardianCreate} />
-            <Route
+            <Route exact path='/oss/guardiancreate' component={GuardianCreate} />
+            <Route exact 
               path='/oss/guardianedit/:guardian_id'
               component={GuardianEdit}
             />
-            <Route path='/oss/guardians' component={GuardianList} />
-            <Route path='/oss/guardiandetail' component={GuardianDetail} />
+            <Route exact path='/oss/guardians' component={GuardianList} />
+            <Route exact path='/oss/guardiandetail' component={GuardianDetail} />
 
             {/* Student */}
-            <Route
+            <Route exact 
               path='/oss/studentcreate/:guardian_id'
               component={StudentCreate}
             />
-            <Route path='/oss/students' component={StudentList} />
-            <Route path='/oss/studentdetail' component={StudentDetail} />
-            <Route path='/oss/studentedit' component={StudentEdit} />
-
+            <Route exact path='/oss/students' component={StudentList} />
+            <Route exact path='/oss/studentdetail' component={StudentDetail} />
+            <Route exact path='/oss/studentedit' component={StudentEdit} />
           </div>
         </Content>
         <Footer>{data.footer && <FooterEx />}</Footer>

@@ -6,6 +6,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import { userActions } from './actions';
+import { connect } from 'react-redux';
 
 // import axios from 'axios';
 
@@ -24,50 +26,61 @@ const styles = {
 class LoginComponent extends React.Component {
   constructor(props) {
     super(props);
+
+    // reset login status
+    //this.props.store.dispatch(userActions.logOut());
+
     this.state = {
-      username: '',
+      email: '',
       password: '',
       message: ''
     };
+
     this.Auth = new AuthService();
+
+    this.onChange = this.onChange.bind(this);
     this.loginClicked = this.loginClicked.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   componentDidMount() {
-    localStorage.clear();
+    // sessionStorage.clear();
   }
 
   loginClicked = e => {
     e.preventDefault();
+
     const credentials = {
-      username: this.state.username,
+      email: this.state.email,
       password: this.state.password
     };
 
+    // To use Redux with further detail state, user action
     this.Auth.login(credentials)
-    .then(res =>{
-      this.props.history.push('/home');
-    })
-    .catch(err=>{
-      alert(err)
-    })
-    // AuthService.login(credentials)
-    //   .then(res => {
-    //     console.log(res.data);
-    //     if (res.data.status === 200) {
-    //       localStorage.setItem('userInfo', JSON.stringify(res.data.authToken));
-    //       this.props.history.push('/home');
-    //     } else {
-    //       this.setState({ message: res.data.message });
-    //       console.log('Authentication failed');
-    //     }
-    //   })
-    //   .catch(err => {
-    //     alert(err);
-    //   });
+      .then(res => {
+        // if (res.data.status === 200) {
+        this.props.login(res.data);
+        this.props.history.push('/');
+        // } else {
+        //   console.log('Login Failed!!! From LoginComponent');
+        // }
+      })
+      .catch(err => {
+        this.setState({
+          message: 'Authentication failed. Please check your password.'
+        });
+        this.props.loginFailure(this.state.email);
+      });
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
+
+  onClick = e => {
+    this.setState({ [e.target.name]: e.target.value });
+    this.setState({
+      message: ''
+    });
+  };
 
   render() {
     return (
@@ -82,7 +95,7 @@ class LoginComponent extends React.Component {
             Login
           </Typography>
           <form>
-            <Typography variant='h4' style={styles.notification}>
+            <Typography variant='h6' style={styles.notification}>
               {this.state.message}
             </Typography>
             <TextField
@@ -90,9 +103,10 @@ class LoginComponent extends React.Component {
               label='EMAIL'
               fullWidth
               margin='normal'
-              name='username'
-              value={this.state.username}
+              name='email'
+              value={this.state.email}
               onChange={this.onChange}
+              onClick={this.onClick}
             />
 
             <TextField
@@ -103,6 +117,7 @@ class LoginComponent extends React.Component {
               name='password'
               value={this.state.password}
               onChange={this.onChange}
+              onClick={this.onClick}
             />
 
             <Button
@@ -119,4 +134,11 @@ class LoginComponent extends React.Component {
   }
 }
 
-export default LoginComponent;
+function mapDispatchToProps(dispatch) {
+  return {
+    login: userProfile => dispatch(userActions.loginSuccess(userProfile)),
+    loginFailure: email => dispatch(userActions.loginFailure(email))
+  };
+}
+
+export default connect(null, mapDispatchToProps)(LoginComponent);

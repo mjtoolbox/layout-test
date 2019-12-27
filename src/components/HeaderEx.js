@@ -61,6 +61,10 @@ const styles = ({ spacing, transitions, breakpoints, palette, shape }) => ({
   }
 });
 
+const onClickLogin = e=> {
+  alert("onClickLogin clicked!")
+}
+
 const HeaderEx = ({ classes, screen }) => (
   <>
     <Typography noWrap color={'textSecondary'} className={classes.header}>
@@ -96,11 +100,11 @@ const HeaderEx = ({ classes, screen }) => (
     )}
     {isWidthUp('md', screen) && (
       <>
-        <IconButton>
+        <IconButton onClick={onClickLogin}>
           <Icon>account_circle</Icon>
         </IconButton>
         <IconButton>
-          <Icon>contacts</Icon>
+          <Icon>exit_to_app</Icon>
         </IconButton>
         <IconButton>
           <Icon>sms</Icon>
