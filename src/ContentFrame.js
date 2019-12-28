@@ -33,8 +33,6 @@ import StudentDetail from './components/student/StudentDetail';
 
 import './styles.css';
 
-import Login from './components/Login';
-
 function ContentFrame() {
   const [preset, setPreset] = useState('createStandardLayout');
   const [data, setData] = useState({

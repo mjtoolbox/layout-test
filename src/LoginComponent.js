@@ -9,8 +9,6 @@ import Container from '@material-ui/core/Container';
 import { userActions } from './actions';
 import { connect } from 'react-redux';
 
-// import axios from 'axios';
-
 const styles = {
   center: {
     display: 'flex',

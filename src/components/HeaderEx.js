@@ -6,6 +6,11 @@ import InputBase from '@material-ui/core/InputBase';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import Logout from './../Logout';
+import Login from './../Login';
+import { useSelector } from 'react-redux';
+
+// import { connect } from 'react-redux';
 
 const styles = ({ spacing, transitions, breakpoints, palette, shape }) => ({
   header: {
@@ -61,58 +66,59 @@ const styles = ({ spacing, transitions, breakpoints, palette, shape }) => ({
   }
 });
 
-const onClickLogin = e=> {
-  alert("onClickLogin clicked!")
-}
+// const onClickLogin = e=> {
+//   alert("onClickLogin clicked!")
+// }
 
-const HeaderEx = ({ classes, screen }) => (
-  <>
-    <Typography noWrap color={'textSecondary'} className={classes.header}>
-      One Small Steps
-    </Typography>
-    <div className={classes.grow} />
-    <div className={classes.search}>
-      <div className={classes.searchIcon}>
-        <Icon>search</Icon>
+// const HeaderEx = ({ isLogged, classes, screen }) => (
+function HeaderEx({ classes, screen }) {
+  const isLogged = useSelector(state => state.isLogged);
+
+  return (
+    <>
+      <Typography noWrap color={'textSecondary'} className={classes.header}>
+        One Small Steps
+      </Typography>
+      <div className={classes.grow} />
+      <div className={classes.search}>
+        <div className={classes.searchIcon}>
+          <Icon>search</Icon>
+        </div>
+        <InputBase
+          placeholder='Search…'
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputInput
+          }}
+        />
       </div>
-      <InputBase
-        placeholder='Search…'
-        classes={{
-          root: classes.inputRoot,
-          input: classes.inputInput
-        }}
-      />
-    </div>
-    {screen === 'xs' && (
-      <IconButton>
-        <Icon>more_vert</Icon>
-      </IconButton>
-    )}
-    {screen === 'sm' && (
-      <>
-        <IconButton>
-          <Icon>favorite</Icon>
-        </IconButton>
+      {screen === 'xs' && (
         <IconButton>
           <Icon>more_vert</Icon>
         </IconButton>
-      </>
-    )}
-    {isWidthUp('md', screen) && (
-      <>
-        <IconButton onClick={onClickLogin}>
-          <Icon>account_circle</Icon>
-        </IconButton>
-        <IconButton>
-          <Icon>exit_to_app</Icon>
-        </IconButton>
-        <IconButton>
-          <Icon>sms</Icon>
-        </IconButton>
-      </>
-    )}
-  </>
-);
+      )}
+      {screen === 'sm' && (
+        <>
+          <IconButton>
+            <Icon>favorite</Icon>
+          </IconButton>
+          <IconButton>
+            <Icon>more_vert</Icon>
+          </IconButton>
+        </>
+      )}
+      {isWidthUp('md', screen) && (
+        <>
+          {!isLogged && <Login />}
+          {isLogged && <Logout />}
+          <IconButton>
+            <Icon>sms</Icon>
+          </IconButton>
+        </>
+      )}
+    </>
+  );
+}
 
 HeaderEx.propTypes = {
   screen: PropTypes.string,
@@ -122,4 +128,18 @@ HeaderEx.defaultProps = {
   screen: null
 };
 
+function mapStateToProps(state) {
+  if (state.isLogged == true) {
+    const { isLogged, userProfile, role } = state;
+    const { email, name } = userProfile;
+    return {
+      isLogged,
+      name,
+      role,
+      email
+    };
+  }
+}
+
+// export default connect(mapStateToProps)(withStyles(styles)(HeaderEx));
 export default withStyles(styles)(HeaderEx);

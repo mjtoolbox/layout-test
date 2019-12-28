@@ -7,9 +7,9 @@ import {
   Route
 } from 'react-router-dom';
 // import ContentFrame from './ContentFrame';
-import Login from './components/Login';
 import ContentFrame from './ContentFrame';
-import LoginComponent from './LoginComponent';
+import LoginComponent from './LoginComponent.js';
+import Logout from './Logout.js';
 
 const AuthenticatedRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -36,6 +36,7 @@ class App extends React.Component {
         <Route exact path='/' component={ContentFrame} />
         <Route path='/oss' component={ContentFrame} />
         <Route exact path='/login' component={LoginComponent} />
+        <Route exact path='/logout' component={Logout} />
       </Switch>
     );
   }
