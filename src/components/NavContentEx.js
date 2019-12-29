@@ -31,7 +31,7 @@ const list = [
     title: 'Programs and curriculums',
     primaryText: 'Programs',
     icon: 'subject',
-    linkUrl: '/programs',
+    linkUrl: '/oss/programs',
     hidden: false
   },
   {

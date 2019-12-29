@@ -1,8 +1,8 @@
 import React from 'react';
-import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Link } from 'react-router-dom';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 
 class Login extends React.Component {
   //   loginClicked = () => {
@@ -14,7 +14,7 @@ class Login extends React.Component {
       <Tooltip title='Login'>
         <Link to='/login' className='nav-link'>
           <IconButton>
-            <Icon>account_circle</Icon>
+            <AccountCircleOutlinedIcon />
           </IconButton>
         </Link>
       </Tooltip>

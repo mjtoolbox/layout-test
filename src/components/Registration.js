@@ -9,24 +9,35 @@ import {
   TextField
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
 
 class Registration extends React.Component {
   render() {
     return (
       <>
-        <h1>Registration page</h1>
-        <div>
-          In order to register, guardian information must be captured first.
+        <div style={{ padding: 20, transition: '0.3s' }}>
+          <Typography variant={'overline'}>REGISTRATION</Typography>
+          <Typography weight={'bold'} variant={'h5'} gutterBottom>
+            Registration
+          </Typography>
+          <Typography>
+            In order to register student, Guardian must create an account in the
+            system first. Please click below to proceed.
+          </Typography>
+          <br />
+          <br />
+          <Divider />
+          <Card md={6} xs={12}>
+            <CardActions>
+              <Link
+                to={'/oss/guardiancreate'}
+                className='btn btn-primary btn-sm'
+              >
+                Create Account
+              </Link>
+            </CardActions>
+          </Card>
         </div>
-        <br></br>
-        <Divider />
-        <Card md={6} xs={12}>
-          <CardActions>
-            <Link to={'/oss/guardiancreate'} className='btn btn-primary btn-sm'>
-              Start Registration
-            </Link>
-          </CardActions>
-        </Card>
       </>
     );
   }

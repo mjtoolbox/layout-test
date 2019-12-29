@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Logout from './../Logout';
 import Login from './../Login';
 import { useSelector } from 'react-redux';
+import Tooltip from '@material-ui/core/Tooltip';
 
 // import { connect } from 'react-redux';
 
@@ -16,8 +17,9 @@ const styles = ({ spacing, transitions, breakpoints, palette, shape }) => ({
   header: {
     fontWeight: 900,
     minWidth: 0,
-    fontSize: 18
-  },
+    fontSize: 18,
+    color: 'white'
+    },
   grow: {
     flexGrow: 1
   },
@@ -111,9 +113,11 @@ function HeaderEx({ classes, screen }) {
         <>
           {!isLogged && <Login />}
           {isLogged && <Logout />}
-          <IconButton>
-            <Icon>sms</Icon>
-          </IconButton>
+          <Tooltip title='Message'>
+            <IconButton>
+              <Icon>sms</Icon>
+            </IconButton>
+          </Tooltip>
         </>
       )}
     </>
@@ -128,18 +132,18 @@ HeaderEx.defaultProps = {
   screen: null
 };
 
-function mapStateToProps(state) {
-  if (state.isLogged == true) {
-    const { isLogged, userProfile, role } = state;
-    const { email, name } = userProfile;
-    return {
-      isLogged,
-      name,
-      role,
-      email
-    };
-  }
-}
+// function mapStateToProps(state) {
+//   if (state.isLogged == true) {
+//     const { isLogged, userProfile, role } = state;
+//     const { email, name } = userProfile;
+//     return {
+//       isLogged,
+//       name,
+//       role,
+//       email
+//     };
+//   }
+// }
 
 // export default connect(mapStateToProps)(withStyles(styles)(HeaderEx));
 export default withStyles(styles)(HeaderEx);

@@ -28,11 +28,7 @@ function NavHeaderEx({ collapsed }) {
             }}
           />
         )}
-        {!isLogged && (
-          <Typography variant={'h6'} noWrap>
-            You are not logged in
-          </Typography>
-        )}
+        {!isLogged && <Typography variant={'overline'} noWrap>You are not logged in</Typography>}
         <div style={{ paddingBottom: 16 }} />
         <Typography variant={'h6'} noWrap>
           {name}

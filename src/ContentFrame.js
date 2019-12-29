@@ -20,6 +20,7 @@ import TeacherCreate from './components/teacher/TeacherCreate';
 import TeacherDetail from './components/teacher/TeacherDetail';
 
 import Registration from './components/Registration';
+import Programs from './components/Programs';
 
 import GuardianList from './components/guardian/GuardianList';
 import GuardianCreate from './components/guardian/GuardianCreate';
@@ -32,6 +33,7 @@ import StudentEdit from './components/student/StudentEdit';
 import StudentDetail from './components/student/StudentDetail';
 
 import './styles.css';
+import { blue } from '@material-ui/core/colors';
 
 function ContentFrame() {
   const [preset, setPreset] = useState('createStandardLayout');
@@ -43,7 +45,22 @@ function ContentFrame() {
   });
 
   return (
-    <MuiThemeProvider theme={createMuiTheme()}>
+    <MuiThemeProvider
+      theme={createMuiTheme({
+        overrides: {
+          MuiToolbar: {
+            root: {
+              fontWeight: 'bold',
+              backgroundColor: '#607d8b',
+              margin: '10px'
+              // "&:hover": {
+              //   backgroundColor: "green"
+              // }
+            }
+          }
+        }
+      })}
+    >
       <Root
         config={presets[preset]({ headerPosition: 'relative' })}
         style={{ minHeight: '100vh' }}
@@ -76,12 +93,14 @@ function ContentFrame() {
             <Route exact path='/oss' component={Main} />
             <Route exact path='/oss/main' component={Main} />
 
-            {/* Nagivation */}
+            <Route exact path='/oss/programs' component={Programs} />
+
             <Route exact path='/oss/registration' component={Registration} />
 
             {/* Teacher */}
             <Route exact path='/oss/teachercreate' component={TeacherCreate} />
-            <Route exact
+            <Route
+              exact
               path='/oss/teacheredit/:teacher_id'
               component={TeacherEdit}
             />
@@ -89,16 +108,26 @@ function ContentFrame() {
             <Route exact path='/oss/teacherdetail' component={TeacherDetail} />
 
             {/* Guardian */}
-            <Route exact path='/oss/guardiancreate' component={GuardianCreate} />
-            <Route exact 
+            <Route
+              exact
+              path='/oss/guardiancreate'
+              component={GuardianCreate}
+            />
+            <Route
+              exact
               path='/oss/guardianedit/:guardian_id'
               component={GuardianEdit}
             />
             <Route exact path='/oss/guardians' component={GuardianList} />
-            <Route exact path='/oss/guardiandetail' component={GuardianDetail} />
+            <Route
+              exact
+              path='/oss/guardiandetail'
+              component={GuardianDetail}
+            />
 
             {/* Student */}
-            <Route exact 
+            <Route
+              exact
               path='/oss/studentcreate/:guardian_id'
               component={StudentCreate}
             />
