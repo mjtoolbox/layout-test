@@ -21,10 +21,10 @@ class Main extends React.Component {
               <br />
               <br />
               <Typography weight={'bold'} variant={'h4'} gutterBottom>
-                {"Welcome"}
+                {"ABOUT US"}
               </Typography>
-              <Typography gutterBottom>
-                I created this because
+              <Typography variant={'h6'} gutterBottom>
+              We know that learning is easier when you have an excellent teacher. That's why most of our educators have achieved an advanced degree in their field and years of real industry experience. Our instructors are passionate about the subjects they teach and bring this enthusiasm into their seminars and courses. 
                 <br />
               </Typography>             
             </div>

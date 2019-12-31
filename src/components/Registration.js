@@ -25,9 +25,15 @@ class Registration extends React.Component {
             system first. Please click below to proceed.
           </Typography>
           <br />
-          <br />
           <Divider />
-          <Card md={6} xs={12}>
+          <br />
+          <Link
+                to={'/oss/guardiancreate'}
+                className='btn btn-primary btn-sm'
+              >
+                Create Account
+              </Link>
+          {/* <Card md={6} xs={12}>
             <CardActions>
               <Link
                 to={'/oss/guardiancreate'}
@@ -36,7 +42,7 @@ class Registration extends React.Component {
                 Create Account
               </Link>
             </CardActions>
-          </Card>
+          </Card> */}
         </div>
       </>
     );

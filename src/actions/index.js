@@ -3,7 +3,8 @@ import { userConstraints } from '../constraints/actionTypes.js';
 export const userActions = {
   logOut,
   loginSuccess,
-  loginFailure
+  loginFailure,
+  setSelectedIndex
 };
 
 // Not to confuse this action with Reducer.
@@ -32,5 +33,12 @@ function logOut() {
     type: userConstraints.LOGOUT,
     //isLogged: false,
     payload: ''
+  };
+}
+
+function setSelectedIndex(index) {
+  return {
+    type: userConstraints.SET_SELECTED_INDEX,
+    selectedIndex: index
   };
 }

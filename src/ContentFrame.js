@@ -52,7 +52,7 @@ function ContentFrame() {
             root: {
               fontWeight: 'bold',
               backgroundColor: '#607d8b',
-              margin: '10px'
+              // margin: '10px'
               // "&:hover": {
               //   backgroundColor: "green"
               // }

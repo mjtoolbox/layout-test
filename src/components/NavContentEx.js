@@ -7,7 +7,8 @@ import Icon from '@material-ui/core/Icon';
 import Divider from '@material-ui/core/Divider';
 import { Link } from 'react-router-dom';
 import Tooltip from '@material-ui/core/Tooltip';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { userActions } from './../actions';
 
 const list = [
   {
@@ -96,6 +97,10 @@ const list = [
 const NavContentEx = () => {
   const isLogged = useSelector(state => state.isLogged);
   const role = useSelector(state => state.role);
+  const navSelectedIndex = useSelector(state => state.navSelectedIndex);
+
+  const dispatch = useDispatch();
+
 
   // Re-assign left navigation menu based on login & role
   if (isLogged && role === 'ADMIN') {
@@ -117,8 +122,9 @@ const NavContentEx = () => {
       {list.map(({ title, primaryText, icon, linkUrl, hidden }, i) => (
         <Tooltip title={title}>
           <ListItem
+            onClick={e=>dispatch(userActions.setSelectedIndex(i))}
             key={primaryText}
-            selected={i === 0}
+            selected={i === navSelectedIndex}
             button
             component={Link}
             to={linkUrl}

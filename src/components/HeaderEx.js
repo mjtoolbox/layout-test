@@ -113,11 +113,13 @@ function HeaderEx({ classes, screen }) {
         <>
           {!isLogged && <Login />}
           {isLogged && <Logout />}
+          {isLogged && 
           <Tooltip title='Message'>
             <IconButton>
               <Icon>sms</Icon>
             </IconButton>
           </Tooltip>
+          }
         </>
       )}
     </>

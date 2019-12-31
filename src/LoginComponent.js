@@ -12,12 +12,19 @@ import { connect } from 'react-redux';
 const styles = {
   center: {
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    fontWeight: 'bold'
   },
   notification: {
     display: 'flex',
     justifyContent: 'center',
     color: '#dc3545'
+  },
+  header: {
+    fontWeight: 900,
+    minWidth: 0,
+    fontSize: 18,
+    color: 'white'
   }
 };
 
@@ -83,12 +90,15 @@ class LoginComponent extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <AppBar position='static'>
+        <AppBar position='static' style={{ backgroundColor: '#607d8b' }}>
           <Toolbar>
-            <Typography variant='h6'>React User Application</Typography>
+            <Typography variant='h6' style={styles.header}>
+              React User Application
+            </Typography>
           </Toolbar>
         </AppBar>
         <Container maxWidth='sm'>
+          <br />
           <Typography variant='h4' style={styles.center}>
             Login
           </Typography>

@@ -29,6 +29,10 @@ const LoggedReducer = (state = initialState, action) => {
         userProfile: '',
         role: ''
       };
+    case userConstraints.SET_SELECTED_INDEX:
+      return{
+        navSelectedIndex: action.selectedIndex
+      }  
     default:
       return state;
   }
