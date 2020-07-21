@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
+import AuthService from '../../service/AuthService';
 
 const baseUrl = 'http://localhost:8080';
 
@@ -9,18 +10,22 @@ export default class StudentRow extends Component {
   constructor(props) {
     super(props);
     this.delete = this.delete.bind(this);
+    this.Auth = new AuthService();
   }
   delete() {
     axios
-      .delete(baseUrl + '/students/' + this.props.aStudent.membership_id)
+      .delete(
+        baseUrl + '/students/' + this.props.aStudent.membership_id,
+        this.Auth.getAuthHeader()
+      )
       .then((res) => console.log('deleted'))
       .catch((err) => console.log(err));
   }
 
   render() {
-    const registrationDate = moment(this.props.aStudent.date_of_registration).format(
-      'YYYY-MM-DD'
-    );
+    const registrationDate = moment(
+      this.props.aStudent.date_of_registration
+    ).format('YYYY-MM-DD');
     const updatedDate = moment(this.props.aStudent.last_update).format(
       'YYYY-MM-DD HH:MM'
     );

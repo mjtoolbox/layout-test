@@ -7,7 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import DateFnsUtils from '@date-io/date-fns';
 import Button from 'react-bootstrap/Button';
-
+import AuthService from '../../service/AuthService';
 import {
   Card,
   CardHeader,
@@ -15,12 +15,12 @@ import {
   CardActions,
   Divider,
   Grid,
-  TextField
+  TextField,
 } from '@material-ui/core';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
-  DatePicker
+  DatePicker,
 } from '@material-ui/pickers';
 
 const baseUrl = 'http://localhost:8080';
@@ -62,20 +62,19 @@ export default class TeacherEdit extends Component {
       postal_code: '',
       last_update: '',
       status: '',
-      end_date: ''
+      end_date: '',
     };
+    this.Auth = new AuthService();
   }
 
   componentDidMount() {
     // this._isMounted = true;
     axios
-      .get(baseUrl + '/teachers/' + this.props.match.params.teacher_id, {
-        auth: {
-          username: 'mymy',
-          password: 'hello'
-        }
-      })
-      .then(response => {
+      .get(
+        baseUrl + '/teachers/' + this.props.match.params.teacher_id,
+        this.Auth.getAuthHeader()
+      )
+      .then((response) => {
         // if (this._isMounted) {
         this.setState({
           teacher_id: response.data.teacher_id,
@@ -92,11 +91,11 @@ export default class TeacherEdit extends Component {
           postal_code: response.data.postal_code,
           last_update: response.data.last_update,
           status: response.data.status,
-          end_date: response.data.end_date
+          end_date: response.data.end_date,
         });
         // }
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   }
@@ -107,19 +106,19 @@ export default class TeacherEdit extends Component {
 
   onChangeName(e) {
     this.setState({
-      teacher_name: e.target.value
+      teacher_name: e.target.value,
     });
   }
 
   onChangeSubject(e) {
     this.setState({
-      subject: e.target.value
+      subject: e.target.value,
     });
   }
 
   onChangeLevel(e) {
     this.setState({
-      level: e.target.value
+      level: e.target.value,
     });
   }
 
@@ -127,61 +126,61 @@ export default class TeacherEdit extends Component {
     const startDate = moment(date).format('YYYY-MM-DD HH:mm:ss');
     console.log(startDate);
     this.setState({
-      start_date: date
+      start_date: date,
     });
   }
 
   onChangeCellPhone(e) {
     this.setState({
-      cell_phone: e.target.value
+      cell_phone: e.target.value,
     });
   }
 
   onChangeEmail(e) {
     this.setState({
-      email: e.target.value
+      email: e.target.value,
     });
   }
 
   onChangeHomePhone(e) {
     this.setState({
-      home_phone: e.target.value
+      home_phone: e.target.value,
     });
   }
 
   onChangeAddress(e) {
     this.setState({
-      address: e.target.value
+      address: e.target.value,
     });
   }
 
   onChangeCity(e) {
     this.setState({
-      city: e.target.value
+      city: e.target.value,
     });
   }
 
   onChangeProvince(e) {
     this.setState({
-      province: e.target.value
+      province: e.target.value,
     });
   }
 
   onChangePostalCode(e) {
     this.setState({
-      postal_code: e.target.value
+      postal_code: e.target.value,
     });
   }
   onChangeStatus(e) {
     this.setState({
-      status: e.target.value
+      status: e.target.value,
     });
   }
 
   onChangeEndDate(date) {
     const endDate = moment(date).format('YYYY-MM-DD');
     this.setState({
-      end_date: endDate
+      end_date: endDate,
     });
   }
 
@@ -200,19 +199,19 @@ export default class TeacherEdit extends Component {
       province: this.state.province,
       postal_code: this.state.postal_code,
       status: this.state.status,
-      end_date: this.state.end_date
+      end_date: this.state.end_date,
     };
     axios
       .put('http://localhost:8080/teachers/' + this.state.teacher_id, obj, {
         auth: {
           username: 'mymy',
-          password: 'hello'
-        }
+          password: 'hello',
+        },
       })
-      .then(res => {
+      .then((res) => {
         this.props.history.push('/teachers');
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   }
@@ -236,7 +235,7 @@ export default class TeacherEdit extends Component {
             margin='normal'
             label='End Date picker'
             value={this.state.end_date}
-            onChange={date => this.onChangeEndDate(date)}
+            onChange={(date) => this.onChangeEndDate(date)}
           />
         </Grid>
       );
@@ -251,7 +250,7 @@ export default class TeacherEdit extends Component {
             margin='normal'
             label='End Date picker'
             value={this.state.end_date}
-            onChange={date => this.onChangeEndDate(date)}
+            onChange={(date) => this.onChangeEndDate(date)}
           />
         </Grid>
       );
@@ -362,7 +361,7 @@ export default class TeacherEdit extends Component {
                     required
                     label='Start Date picker'
                     value={startDate}
-                    onChange={date => this.onChangeStartDate(date)}
+                    onChange={(date) => this.onChangeStartDate(date)}
                   />
                 </Grid>
 
@@ -407,7 +406,7 @@ export default class TeacherEdit extends Component {
                     onChange={this.onChangeProvince}
                     inputProps={{
                       name: 'province',
-                      id: 'province'
+                      id: 'province',
                     }}
                   >
                     <MenuItem value='BC'>BC</MenuItem>

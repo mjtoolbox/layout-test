@@ -18,6 +18,7 @@ import Button from 'react-bootstrap/Button';
 import moment from 'moment';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import AuthService from '../../service/AuthService';
 
 const styles = (theme) => ({
   button: {
@@ -78,11 +79,15 @@ class StudentEdit extends Component {
       province: '',
       postal_code: '',
     };
+    this.Auth = new AuthService();
   }
 
   componentDidMount() {
     axios
-      .get(baseUrl + '/students/' + this.props.match.params.membership_id)
+      .get(
+        baseUrl + '/students/' + this.props.match.params.membership_id,
+        this.Auth.getAuthHeader()
+      )
       .then((response) => {
         this.setState({
           membership_id: response.data.membership_id,
@@ -224,7 +229,11 @@ class StudentEdit extends Component {
     };
 
     axios
-      .post(baseUrl + '/guardians/' + this.state.guardian_id + '/students', obj)
+      .post(
+        baseUrl + '/guardians/' + this.state.guardian_id + '/students',
+        obj,
+        this.Auth.getAuthHeader()
+      )
       .then((response) => {
         this.setState({ membership_id: response.data.membership_id });
 
@@ -234,7 +243,8 @@ class StudentEdit extends Component {
         axios
           .post(
             baseUrl + '/students/' + this.state.membership_id + '/contact',
-            student_contact
+            student_contact,
+            this.Auth.getAuthHeader()
           )
           .then((response) => {
             this.setState({

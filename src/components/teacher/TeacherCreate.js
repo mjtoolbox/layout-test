@@ -15,27 +15,28 @@ import {
   Grid,
   TextField,
   withStyles,
-  OutlinedInput
+  OutlinedInput,
 } from '@material-ui/core';
 import {
   MuiPickersUtilsProvider,
-  KeyboardDatePicker
+  KeyboardDatePicker,
 } from '@material-ui/pickers';
+import AuthService from '../../service/AuthService';
 
 const baseUrl = 'http://localhost:8080';
 
-const styles = theme => ({
+const styles = (theme) => ({
   button: {
     display: 'block',
-    marginTop: theme.spacing.unit * 2
+    marginTop: theme.spacing.unit * 2,
   },
   formControl: {
     margin: theme.spacing.unit,
-    minWidth: 120
+    minWidth: 120,
   },
   selectEmpty: {
-    marginTop: theme.spacing(2)
-  }
+    marginTop: theme.spacing(2),
+  },
 });
 
 class TeacherCreate extends Component {
@@ -71,86 +72,87 @@ class TeacherCreate extends Component {
       province: '',
       postal_code: '',
       status: 'active',
-      end_date: ''
+      end_date: '',
     };
+    this.Auth = new AuthService();
   }
 
   onChangeName(e) {
     this.setState({
-      teacher_name: e.target.value
+      teacher_name: e.target.value,
     });
   }
 
   onChangeSubject(e) {
     this.setState({
-      subject: e.target.value
+      subject: e.target.value,
     });
   }
 
   onChangeLevel(e) {
     this.setState({
-      level: e.target.value
+      level: e.target.value,
     });
   }
 
   onChangeStartDate(date) {
     const startDate = moment(date).format('YYYY-MM-DD');
     this.setState({
-      start_date: startDate
+      start_date: startDate,
     });
   }
 
   onChangeCellPhone(e) {
     this.setState({
-      cell_phone: e.target.value
+      cell_phone: e.target.value,
     });
   }
 
   onChangeEmail(e) {
     this.setState({
-      email: e.target.value
+      email: e.target.value,
     });
   }
 
   onChangeHomePhone(e) {
     this.setState({
-      home_phone: e.target.value
+      home_phone: e.target.value,
     });
   }
 
   onChangeAddress(e) {
     this.setState({
-      address: e.target.value
+      address: e.target.value,
     });
   }
 
   onChangeCity(e) {
     this.setState({
-      city: e.target.value
+      city: e.target.value,
     });
   }
 
   onChangeProvince(e) {
     this.setState({
-      province: e.target.value
+      province: e.target.value,
     });
   }
 
   onChangePostalCode(e) {
     this.setState({
-      postal_code: e.target.value
+      postal_code: e.target.value,
     });
   }
 
   onChangeStatus(e) {
     this.setState({
-      status: e.target.value
+      status: e.target.value,
     });
   }
   onChangeEndDate(date) {
     const endDate = moment(date).format('YYYY-MM-DD');
     this.setState({
-      end_date: endDate
+      end_date: endDate,
     });
   }
 
@@ -169,22 +171,17 @@ class TeacherCreate extends Component {
       province: this.state.province,
       postal_code: this.state.postal_code,
       status: this.state.status,
-      end_date: this.state.end_date
+      end_date: this.state.end_date,
     };
 
     axios
       // .post(baseUrl + '/teachers', obj)
       // @Todo: Program number must be dynamic
-      .post(baseUrl + '/teachers/programs/10', obj, {
-        auth: {
-          username: 'mymy',
-          password: 'hello'
-        }
-      })
-      .then(res => {
+      .post(baseUrl + '/teachers/programs/10', obj, this.Auth.getAuthHeader())
+      .then((res) => {
         this.props.history.push('/oss/teachers');
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   }
@@ -293,9 +290,9 @@ class TeacherCreate extends Component {
                     required
                     label='Start Date picker'
                     value={this.state.start_date}
-                    onChange={date => this.onChangeStartDate(date)}
+                    onChange={(date) => this.onChangeStartDate(date)}
                     KeyboardButtonProps={{
-                      'aria-label': 'change date'
+                      'aria-label': 'change date',
                     }}
                   />
                 </Grid>
@@ -331,13 +328,13 @@ class TeacherCreate extends Component {
                     onChange={this.onChangeProvince}
                     inputProps={{
                       name: 'province',
-                      id: 'province'
+                      id: 'province',
                     }}
                     margin='dense'
                     variant='outlined'
                     input={<OutlinedInput labelWidth={80} />}
                   >
-                     <MenuItem value=''>
+                    <MenuItem value=''>
                       <em>None</em>
                     </MenuItem>
                     <MenuItem value='BC'>BC</MenuItem>
