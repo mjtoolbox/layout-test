@@ -12,36 +12,31 @@ export default class StudentRow extends Component {
   }
   delete() {
     axios
-      .delete(baseUrl + '/students/' + this.props.obj.membership_id, {
-        auth: {
-          username: 'mymy',
-          password: 'hello'
-        }
-      })
-      .then(res => console.log('deleted'))
-      .catch(err => console.log(err));
+      .delete(baseUrl + '/students/' + this.props.aStudent.membership_id)
+      .then((res) => console.log('deleted'))
+      .catch((err) => console.log(err));
   }
 
   render() {
-    const registrationDate = moment(this.props.obj.date_of_registration).format(
+    const registrationDate = moment(this.props.aStudent.date_of_registration).format(
       'YYYY-MM-DD'
     );
-    const updatedDate = moment(this.props.obj.last_update).format(
+    const updatedDate = moment(this.props.aStudent.last_update).format(
       'YYYY-MM-DD HH:MM'
     );
 
     // Check if studentContact is empty or not
     const email =
-      this.props.obj && this.props.obj.studentContact
-        ? this.props.obj.studentContact.email
+      this.props.aStudent && this.props.aStudent.studentContact
+        ? this.props.aStudent.studentContact.email
         : null;
 
     return (
       <tr>
-        <td>{this.props.obj.membership_id}</td>
-        <td>{this.props.obj.preferred_name}</td>
-        <td>{this.props.obj.membership_type}</td>
-        <td>{this.props.obj.grade}</td>
+        <td>{this.props.aStudent.membership_id}</td>
+        <td>{this.props.aStudent.preferred_name}</td>
+        <td>{this.props.aStudent.membership_type}</td>
+        <td>{this.props.aStudent.grade}</td>
         <td>{email}</td>
         <td>{registrationDate}</td>
         <td>{updatedDate}</td>
@@ -50,18 +45,18 @@ export default class StudentRow extends Component {
             to={{
               pathname: '/oss/studentdetail',
               state: {
-                // teacherProps: this.props.obj.teacher_name
-                studentProps: this.props.obj
-              }
+                // teacherProps: this.props.aStudent.teacher_name
+                studentProps: this.props.aStudent,
+              },
             }}
             className='btn btn-primary btn-sm'
           >
-            View Detail
+            Detail
           </Link>
         </td>
         <td>
           <Link
-            to={'/oss/studentedit/' + this.props.obj.membership_id}
+            to={'/oss/studentedit/' + this.props.aStudent.membership_id}
             className='btn btn-primary btn-sm'
           >
             Edit

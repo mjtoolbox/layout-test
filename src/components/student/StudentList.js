@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
 import { Card, CardHeader } from '@material-ui/core';
+import AuthService from '../../service/AuthService';
 
 const baseUrl = 'http://localhost:8080';
 
@@ -13,29 +14,25 @@ export default class StudentList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      students: []
+      students: [],
     };
+    this.Auth = new AuthService();
   }
 
   componentDidMount() {
     axios
-      .get(baseUrl + '/students', {
-        auth: {
-          username: 'mymy',
-          password: 'hello'
-        }
-      })
-      .then(response => {
+      .get(baseUrl + '/students', this.Auth.getAuthHeader())
+      .then((response) => {
         this.setState({ students: response.data });
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   }
 
   tabRow() {
-    return this.state.students.map(function(object, i) {
-      return <StudentRow obj={object} key={i} />;
+    return this.state.students.map(function (object, i) {
+      return <StudentRow aStudent={object} key={i} />;
     });
   }
 

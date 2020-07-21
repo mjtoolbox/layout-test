@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
+import AuthService from '../../service/AuthService';
 
 const baseUrl = 'http://localhost:8080';
 
@@ -9,18 +10,17 @@ export default class GuardianRow extends Component {
   constructor(props) {
     super(props);
     this.delete = this.delete.bind(this);
+    this.Auth = new AuthService();
   }
 
   delete() {
     axios
-      .delete(baseUrl + '/guardians/' + this.props.obj.guardian_id, {
-        auth: {
-          username: 'mymy',
-          password: 'hello'
-        }
-      })
-      .then(res => console.log('deleted'))
-      .catch(err => console.log(err));
+      .delete(
+        baseUrl + '/guardians/' + this.props.obj.guardian_id,
+        this.Auth.getAuthHeader()
+      )
+      .then((res) => console.log('deleted'))
+      .catch((err) => console.log(err));
   }
 
   render() {
@@ -45,8 +45,8 @@ export default class GuardianRow extends Component {
               pathname: '/oss/guardiandetail',
               state: {
                 // teacherProps: this.props.obj.teacher_name
-                guardianProps: this.props.obj
-              }
+                guardianProps: this.props.obj,
+              },
             }}
             className='btn btn-primary btn-sm'
           >

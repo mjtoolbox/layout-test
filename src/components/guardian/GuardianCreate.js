@@ -13,29 +13,31 @@ import {
   CardActions,
   Divider,
   Grid,
-  TextField
+  TextField,
 } from '@material-ui/core';
 import {
   MuiPickersUtilsProvider,
-  KeyboardDatePicker
+  KeyboardDatePicker,
 } from '@material-ui/pickers';
+import AuthService from '../../service/AuthService';
 
 const baseUrl = 'http://localhost:8080';
 
 export default class GuardianCreate extends Component {
   constructor(props) {
     super(props);
+    this.onChangeEmail = this.onChangeEmail.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeRelationship = this.onChangeRelationship.bind(this);
     this.onChangeCellPhone = this.onChangeCellPhone.bind(this);
-    this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangeHomePhone = this.onChangeHomePhone.bind(this);
     this.onChangeAddress = this.onChangeAddress.bind(this);
     this.onChangeCity = this.onChangeCity.bind(this);
     this.onChangeProvince = this.onChangeProvince.bind(this);
     this.onChangeProvince = this.onChangeProvince.bind(this);
     this.onChangePostalCode = this.onChangePostalCode.bind(this);
-   
+
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
@@ -44,65 +46,73 @@ export default class GuardianCreate extends Component {
       relationship: '',
       cell_phone: '',
       email: '',
+      password: '',
       home_phone: '',
       address: '',
       city: '',
       province: '',
-      postal_code: ''
+      postal_code: '',
     };
+    this.Auth = new AuthService();
+  }
+
+  onChangeEmail(e) {
+    this.setState({
+      email: e.target.value,
+    });
+  }
+
+  onChangePassword(e) {
+    this.setState({
+      password: e.target.value,
+    });
   }
 
   onChangeName(e) {
     this.setState({
-      guardian_name: e.target.value
+      guardian_name: e.target.value,
     });
   }
 
   onChangeRelationship(e) {
     this.setState({
-      relationship: e.target.value
+      relationship: e.target.value,
     });
   }
 
   onChangeCellPhone(e) {
     this.setState({
-      cell_phone: e.target.value
-    });
-  }
-
-  onChangeEmail(e) {
-    this.setState({
-      email: e.target.value
+      cell_phone: e.target.value,
     });
   }
 
   onChangeHomePhone(e) {
     this.setState({
-      home_phone: e.target.value
+      home_phone: e.target.value,
     });
   }
 
   onChangeAddress(e) {
     this.setState({
-      address: e.target.value
+      address: e.target.value,
     });
   }
 
   onChangeCity(e) {
     this.setState({
-      city: e.target.value
+      city: e.target.value,
     });
   }
 
   onChangeProvince(e) {
     this.setState({
-      province: e.target.value
+      province: e.target.value,
     });
   }
 
   onChangePostalCode(e) {
     this.setState({
-      postal_code: e.target.value
+      postal_code: e.target.value,
     });
   }
 
@@ -113,31 +123,25 @@ export default class GuardianCreate extends Component {
       relationship: this.state.relationship,
       cell_phone: this.state.cell_phone,
       email: this.state.email,
+      password: this.state.password,
       home_phone: this.state.home_phone,
       address: this.state.address,
       city: this.state.city,
       province: this.state.province,
-      postal_code: this.state.postal_code
+      postal_code: this.state.postal_code,
     };
 
     axios
-      .post(baseUrl + '/guardians', obj, {
-        auth: {
-          username: 'mymy',
-          password: 'hello'
-        }
+      .post(baseUrl + '/register', obj)
+      .then((res) => {
+        this.props.history.push({
+          pathname: '/oss/studentcreate',
+          state: {
+            guardian_id: res.data.guardian_id,
+          },
+        });
       })
-      .then(res => {
-        this.props.history.push(
-          {
-            pathname: '/oss/studentcreate',
-            state: {
-              guardian_id: res.data.guardian_id
-            }
-          }
-        );
-      })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   }
@@ -154,6 +158,29 @@ export default class GuardianCreate extends Component {
           <Divider />
           <CardContent>
             <Grid container spacing={3}>
+              <Grid item md={6} xs={12}>
+                <TextField
+                  fullWidth
+                  required
+                  label='Email'
+                  margin='dense'
+                  value={this.state.email}
+                  onChange={this.onChangeEmail}
+                  variant='outlined'
+                />
+              </Grid>
+              <Grid item md={6} xs={12}>
+                <TextField
+                  fullWidth
+                  required
+                  type='password'
+                  label='Password'
+                  margin='dense'
+                  value={this.state.password}
+                  onChange={this.onChangePassword}
+                  variant='outlined'
+                />
+              </Grid>
               <Grid item md={6} xs={12}>
                 <TextField
                   fullWidth
@@ -176,17 +203,7 @@ export default class GuardianCreate extends Component {
                   variant='outlined'
                 />
               </Grid>
-              <Grid item md={4} xs={12}>
-                <TextField
-                  fullWidth
-                  required
-                  label='Email'
-                  margin='dense'
-                  value={this.state.email}
-                  onChange={this.onChangeEmail}
-                  variant='outlined'
-                />
-              </Grid>
+
               <Grid item md={2} xs={12}>
                 <TextField
                   helperText='e.g. 123-555-5555'
@@ -242,7 +259,7 @@ export default class GuardianCreate extends Component {
                     onChange={this.onChangeProvince}
                     inputProps={{
                       name: 'province',
-                      id: 'province'
+                      id: 'province',
                     }}
                   >
                     <MenuItem value='BC'>BC</MenuItem>

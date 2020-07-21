@@ -5,10 +5,6 @@ import { Link } from 'react-router-dom';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 
 class Login extends React.Component {
-  //   loginClicked = () => {
-  //     this.props.history.push('/login');
-  //   };
-
   render() {
     return (
       <Tooltip title='Login'>

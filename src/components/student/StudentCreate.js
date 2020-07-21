@@ -15,27 +15,28 @@ import {
   Grid,
   TextField,
   withStyles,
-  OutlinedInput
+  OutlinedInput,
 } from '@material-ui/core';
 import {
   MuiPickersUtilsProvider,
-  KeyboardDatePicker
+  KeyboardDatePicker,
 } from '@material-ui/pickers';
+import AuthService from '../../service/AuthService';
 
 const baseUrl = 'http://localhost:8080';
 
-const styles = theme => ({
+const styles = (theme) => ({
   button: {
     display: 'block',
-    marginTop: theme.spacing.unit * 2
+    marginTop: theme.spacing.unit * 2,
   },
   formControl: {
     margin: theme.spacing.unit,
-    minWidth: 120
+    minWidth: 120,
   },
   selectEmpty: {
-    marginTop: theme.spacing(2)
-  }
+    marginTop: theme.spacing(2),
+  },
 });
 
 class StudentCreate extends Component {
@@ -79,20 +80,19 @@ class StudentCreate extends Component {
       address: '',
       city: '',
       province: '',
-      postal_code: ''
+      postal_code: '',
     };
+    this.Auth = new AuthService();
   }
 
   // Load Guardian object from "Add student" in GuardianList or after creation of Student in StudentCreate
   componentDidMount() {
     axios
-      .get(baseUrl + '/guardians/' + this.props.match.params.guardian_id, {
-        auth: {
-          username: 'mymy',
-          password: 'hello'
-        }
-      })
-      .then(response => {
+      .get(
+        baseUrl + '/guardians/' + this.props.match.params.guardian_id,
+        this.Auth.getAuthHeader()
+      )
+      .then((response) => {
         this.setState({
           guardian_id: response.data.guardian_id,
           guardian_name: response.data.guardian_name,
@@ -101,104 +101,104 @@ class StudentCreate extends Component {
           address: response.data.address,
           city: response.data.city,
           province: response.data.province,
-          postal_code: response.data.postal_code
+          postal_code: response.data.postal_code,
         });
         // }
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   }
 
   onChangePreferredName(e) {
     this.setState({
-      preferred_name: e.target.value
+      preferred_name: e.target.value,
     });
   }
 
   onChangeLegalName(e) {
     this.setState({
-      legal_name: e.target.value
+      legal_name: e.target.value,
     });
   }
 
   onChangeDateOfBirth(date) {
     const dob = moment(date).format('YYYY-MM-DD');
     this.setState({
-      date_of_birth: dob
+      date_of_birth: dob,
     });
   }
 
   onChangeGender(e) {
     this.setState({
-      gender: e.target.value
+      gender: e.target.value,
     });
   }
 
   onChangeMembershipType(e) {
     this.setState({
-      membership_type: e.target.value
+      membership_type: e.target.value,
     });
   }
 
   onChangeGrade(e) {
     this.setState({
-      grade: e.target.value
+      grade: e.target.value,
     });
   }
 
   onChangeDateOfRegistration(date) {
     const registrationDate = moment(date).format('YYYY-MM-DD');
     this.setState({
-      date_of_registration: registrationDate
+      date_of_registration: registrationDate,
     });
   }
 
   onChangeSchool(e) {
     this.setState({
-      school: e.target.value
+      school: e.target.value,
     });
   }
 
   onChangeCellPhone(e) {
     this.setState({
-      cell_phone: e.target.value
+      cell_phone: e.target.value,
     });
   }
 
   onChangeEmail(e) {
     this.setState({
-      email: e.target.value
+      email: e.target.value,
     });
   }
 
   onChangeHomePhone(e) {
     this.setState({
-      home_phone: e.target.value
+      home_phone: e.target.value,
     });
   }
 
   onChangeAddress(e) {
     this.setState({
-      address: e.target.value
+      address: e.target.value,
     });
   }
 
   onChangeCity(e) {
     this.setState({
-      city: e.target.value
+      city: e.target.value,
     });
   }
 
   onChangeProvince(e) {
     this.setState({
-      province: e.target.value
+      province: e.target.value,
     });
   }
 
   onChangePostalCode(e) {
     this.setState({
-      postal_code: e.target.value
+      postal_code: e.target.value,
     });
   }
 
@@ -212,7 +212,7 @@ class StudentCreate extends Component {
       membership_type: this.state.membership_type,
       grade: this.state.grade,
       date_of_registration: this.state.date_of_registration,
-      school: this.state.school
+      school: this.state.school,
     };
 
     const student_contact = {
@@ -222,21 +222,16 @@ class StudentCreate extends Component {
       address: this.state.address,
       city: this.state.city,
       province: this.state.province,
-      postal_code: this.state.postal_code
+      postal_code: this.state.postal_code,
     };
 
     axios
       .post(
         baseUrl + '/guardians/' + this.state.guardian_id + '/students',
         obj,
-        {
-          auth: {
-            username: 'mymy',
-            password: 'hello'
-          }
-        }
+        this.Auth.getAuthHeader()
       )
-      .then(response => {
+      .then((response) => {
         this.setState({ membership_id: response.data.membership_id });
 
         console.log('student id : ' + response.data.membership_id);
@@ -246,14 +241,9 @@ class StudentCreate extends Component {
           .post(
             baseUrl + '/students/' + this.state.membership_id + '/contact',
             student_contact,
-            {
-              auth: {
-                username: 'mymy',
-                password: 'hello'
-              }
-            }
+            this.Auth.getAuthHeader()
           )
-          .then(response => {
+          .then((response) => {
             this.setState({
               email: response.data.state.email,
               cell_phone: response.data.cell_phone,
@@ -261,15 +251,15 @@ class StudentCreate extends Component {
               address: response.data.address,
               city: response.data.city,
               province: response.data.province,
-              postal_code: response.data.postal_code
+              postal_code: response.data.postal_code,
             });
             this.props.history.push('/oss/students');
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log(error);
           });
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   }
@@ -344,7 +334,7 @@ class StudentCreate extends Component {
                     onChange={this.onChangeGender}
                     inputProps={{
                       name: 'gender',
-                      id: 'gender'
+                      id: 'gender',
                     }}
                     margin='dense'
                     variant='outlined'
@@ -369,9 +359,9 @@ class StudentCreate extends Component {
                     required
                     label='DOB'
                     value={this.state.date_of_birth || ''}
-                    onChange={date => this.onChangeDateOfBirth(date)}
+                    onChange={(date) => this.onChangeDateOfBirth(date)}
                     KeyboardButtonProps={{
-                      'aria-label': 'change date'
+                      'aria-label': 'change date',
                     }}
                   />
                 </Grid>
@@ -399,9 +389,9 @@ class StudentCreate extends Component {
                     required
                     label='Registration'
                     value={this.state.date_of_registration}
-                    onChange={date => this.onChangeDateOfRegistration(date)}
+                    onChange={(date) => this.onChangeDateOfRegistration(date)}
                     KeyboardButtonProps={{
-                      'aria-label': 'change date'
+                      'aria-label': 'change date',
                     }}
                   />
                 </Grid>
@@ -494,7 +484,7 @@ class StudentCreate extends Component {
                     onChange={this.onChangeProvince}
                     inputProps={{
                       name: 'province',
-                      id: 'province'
+                      id: 'province',
                     }}
                     margin='dense'
                     variant='outlined'

@@ -133,7 +133,7 @@ function ContentFrame() {
             />
             <Route exact path='/oss/students' component={StudentList} />
             <Route exact path='/oss/studentdetail' component={StudentDetail} />
-            <Route exact path='/oss/studentedit' component={StudentEdit} />
+            <Route exact path='/oss/studentedit/:membership_id' component={StudentEdit} />
           </div>
         </Content>
         <Footer>{data.footer && <FooterEx />}</Footer>

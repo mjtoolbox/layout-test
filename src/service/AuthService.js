@@ -10,19 +10,26 @@ const API_BASE_URL = 'http://localhost:8080';
 class AuthService {
   constructor() {
     this.login = this.login.bind(this);
-    this.getProfile = this.getProfile.bind(this);
+    this.signup = this.signup.bind(this);
+    this.setUserProfile = this.setUserProfile.bind(this);
+    this.getUserProfile = this.getUserProfile.bind(this);
+    this.loggedIn = this.loggedIn.bind(this);
+    this.isTokenExpired = this.isTokenExpired.bind(this);
+    this.getToken = this.getToken.bind(this);
+    this.getAuthHeader = this.getAuthHeader.bind(this);
+    this.logOut = this.logOut.bind(this);
   }
 
   login(credentials) {
     return axios
       .post(API_BASE_URL + '/token/generate-token', credentials)
-      .then(res => {
+      .then((res) => {
         console.log(res.data);
         // this.setToken(res.data.token);
         this.setUserProfile(res.data);
         return Promise.resolve(res);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log('Authentication failed', err);
       });
   }
@@ -30,7 +37,7 @@ class AuthService {
   signup(userInfo) {
     return axios
       .post(API_BASE_URL + '/register', userInfo)
-      .then(res => {
+      .then((res) => {
         if (res.data.status === 200) {
           this.setUserProfile(res.data);
 
@@ -40,7 +47,7 @@ class AuthService {
           console.log('Authentication failed');
         }
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
   }
@@ -53,7 +60,7 @@ class AuthService {
   }
 
   loggedIn() {
-    const token = this.getUserInfo().token;
+    const token = this.getUserProfile().token;
     return !!token && !this.isTokenExpired(token);
   }
 
@@ -71,18 +78,18 @@ class AuthService {
   }
 
   // Really it should name it as getToken()
-  getProfile() {
+  getToken() {
     // Using jwt-decode npm package to decode the token
-    return decode(this.getUserProfile().token);
+    return this.getUserProfile().token;
   }
 
   getAuthHeader() {
-    console.log(this.getUserInfo());
+    console.log(this.getUserProfile());
     return {
       headers: {
         // Authorization: 'Bearer ' + this.getUserInfo().token
-        Authorization: 'Bearer ' + this.getProfile()
-      }
+        Authorization: 'Bearer ' + this.getToken(),
+      },
     };
   }
 

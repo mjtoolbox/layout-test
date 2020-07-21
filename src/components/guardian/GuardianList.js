@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
 import { Card, CardHeader } from '@material-ui/core';
+import AuthService from '../../service/AuthService';
 
 const baseUrl = 'http://localhost:8080';
 
@@ -13,28 +14,24 @@ export default class GuardianList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      guardians: []
+      guardians: [],
     };
+    this.Auth = new AuthService();
   }
 
   componentDidMount() {
     axios
-      .get(baseUrl + '/guardians', {
-        auth: {
-          username: 'mymy',
-          password: 'hello'
-        }
-      })
-      .then(response => {
+      .get(baseUrl + '/guardians', this.Auth.getAuthHeader())
+      .then((response) => {
         this.setState({ guardians: response.data });
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   }
 
   tabRow() {
-    return this.state.guardians.map(function(object, i) {
+    return this.state.guardians.map(function (object, i) {
       return <GuardianRow obj={object} key={i} />;
     });
   }
