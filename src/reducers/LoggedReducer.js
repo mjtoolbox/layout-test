@@ -6,33 +6,45 @@ let userProfile = JSON.parse(sessionStorage.getItem('userProfile'));
 
 // In case if we need to pass token.
 const emptyProfile = {
-  token: '',
-  email: '',
-  name: ''
+  userProfile: {
+    token: '',
+    name: '',
+    email: '',
+    logged: false,
+    roles: [
+      {
+        authority: '',
+      },
+    ],
+  },
 };
 
-const initialState = userProfile
-  ? { isLogged: true, userProfile }
-  : { isLogged: false, emptyProfile };
+const initialState = userProfile ? { userProfile } : { emptyProfile };
 
-const LoggedReducer = (state = initialState, action) => {
+// isLogged is driven value, but it is not ideal to have a driven value becaues some situations can't derive.
+const LoggedReducer = (state = emptyProfile, action) => {
   switch (action.type) {
     case userConstraints.LOGIN_SUCCESS:
       return {
-        isLogged: true, // driven value
+        // isLogged: action.payload.logged,
         userProfile: action.payload,
-        role: action.payload.roles[0].authority // For now, just 1 role
+        // role: action.payload.roles[0].authority, // For now, just 1 role
+        navSelectedIndex: '',
       };
     case userConstraints.LOGOUT:
       return {
-        isLogged: false,
-        userProfile: '',
-        role: ''
+        // isLogged: false,
+        userProfile: emptyProfile,
+        // role: '',
+        navSelectedIndex: '',
       };
     case userConstraints.SET_SELECTED_INDEX:
-      return{
-        navSelectedIndex: action.selectedIndex
-      }  
+      return {
+        // isLogged: action.payload.logged,
+        userProfile: action.payload,
+        // role: action.payload.roles[0].authority,
+        navSelectedIndex: action.selectedIndex,
+      };
     default:
       return state;
   }

@@ -18,10 +18,10 @@ const styles = ({ spacing, transitions, breakpoints, palette, shape }) => ({
     fontWeight: 900,
     minWidth: 0,
     fontSize: 18,
-    color: 'white'
-    },
+    color: 'white',
+  },
   grow: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   search: {
     position: 'relative',
@@ -29,14 +29,14 @@ const styles = ({ spacing, transitions, breakpoints, palette, shape }) => ({
     borderRadius: shape.borderRadius,
     background: palette.grey[200],
     '&:hover': {
-      background: palette.grey[300]
+      background: palette.grey[300],
     },
     marginLeft: 0,
     width: '100%',
     [breakpoints.up('sm')]: {
       marginLeft: spacing(1),
-      width: 'auto'
-    }
+      width: 'auto',
+    },
   },
   searchIcon: {
     width: spacing(9),
@@ -45,11 +45,11 @@ const styles = ({ spacing, transitions, breakpoints, palette, shape }) => ({
     pointerEvents: 'none',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   inputRoot: {
     color: 'inherit',
-    width: '100%'
+    width: '100%',
   },
   inputInput: {
     borderRadius: 4,
@@ -62,10 +62,10 @@ const styles = ({ spacing, transitions, breakpoints, palette, shape }) => ({
     [breakpoints.up('sm')]: {
       width: 120,
       '&:focus': {
-        width: 200
-      }
-    }
-  }
+        width: 200,
+      },
+    },
+  },
 });
 
 // const onClickLogin = e=> {
@@ -74,8 +74,10 @@ const styles = ({ spacing, transitions, breakpoints, palette, shape }) => ({
 
 // const HeaderEx = ({ isLogged, classes, screen }) => (
 function HeaderEx({ classes, screen }) {
-  const isLogged = useSelector(state => state.isLogged);
-
+  // const isLogged = useSelector((state) => state.isLogged);
+  const email = useSelector((state) =>
+    state.userProfile != null ? state.userProfile.email : ''
+  );
   return (
     <>
       <Typography noWrap color={'textSecondary'} className={classes.header}>
@@ -90,7 +92,7 @@ function HeaderEx({ classes, screen }) {
           placeholder='Search…'
           classes={{
             root: classes.inputRoot,
-            input: classes.inputInput
+            input: classes.inputInput,
           }}
         />
       </div>
@@ -111,15 +113,15 @@ function HeaderEx({ classes, screen }) {
       )}
       {isWidthUp('md', screen) && (
         <>
-          {!isLogged && <Login />}
-          {isLogged && <Logout />}
-          {isLogged && 
-          <Tooltip title='Message'>
-            <IconButton>
-              <Icon>sms</Icon>
-            </IconButton>
-          </Tooltip>
-          }
+          {email == '' && <Login />}
+          {email != '' && <Logout />}
+          {email != '' && (
+            <Tooltip title='Message'>
+              <IconButton>
+                <Icon>sms</Icon>
+              </IconButton>
+            </Tooltip>
+          )}
         </>
       )}
     </>
@@ -128,10 +130,10 @@ function HeaderEx({ classes, screen }) {
 
 HeaderEx.propTypes = {
   screen: PropTypes.string,
-  classes: PropTypes.shape({}).isRequired
+  classes: PropTypes.shape({}).isRequired,
 };
 HeaderEx.defaultProps = {
-  screen: null
+  screen: null,
 };
 
 // function mapStateToProps(state) {

@@ -4,30 +4,30 @@ import {
   Link,
   Redirect,
   Switch,
-  Route
+  Route,
 } from 'react-router-dom';
 // import ContentFrame from './ContentFrame';
 import ContentFrame from './ContentFrame';
 import LoginComponent from './LoginComponent.js';
 import Logout from './Logout.js';
 
-const AuthenticatedRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      localStorage.getItem('userInfo') ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{
-            pathname: '/',
-            state: { from: props.location }
-          }}
-        />
-      )
-    }
-  />
-);
+// const AuthenticatedRoute = ({ component: Component, ...rest }) => (
+//   <Route
+//     {...rest}
+//     render={(props) =>
+//       sessionStorage.getItem('userInfo') ? (
+//         <Component {...props} />
+//       ) : (
+//         <Redirect
+//           to={{
+//             pathname: '/',
+//             state: { from: props.location },
+//           }}
+//         />
+//       )
+//     }
+//   />
+// );
 
 class App extends React.Component {
   render() {

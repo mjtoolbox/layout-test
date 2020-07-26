@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -17,7 +17,7 @@ const list = [
     primaryText: 'Home',
     icon: 'home',
     linkUrl: '/oss/main',
-    hidden: false
+    hidden: false,
   },
   {
     index: 1,
@@ -25,7 +25,7 @@ const list = [
     primaryText: 'Registration',
     icon: 'person_add',
     linkUrl: '/oss/registration',
-    hidden: false
+    hidden: false,
   },
   {
     index: 2,
@@ -33,7 +33,7 @@ const list = [
     primaryText: 'Programs',
     icon: 'subject',
     linkUrl: '/oss/programs',
-    hidden: false
+    hidden: false,
   },
   {
     index: 3,
@@ -41,7 +41,7 @@ const list = [
     primaryText: 'Students',
     icon: 'face',
     linkUrl: '/oss/students',
-    hidden: true
+    hidden: true,
   },
   {
     index: 4,
@@ -49,7 +49,7 @@ const list = [
     primaryText: 'Guardians',
     icon: 'person',
     linkUrl: '/oss/guardians',
-    hidden: true
+    hidden: true,
   },
   {
     index: 5,
@@ -57,7 +57,7 @@ const list = [
     primaryText: 'Curriculum Planning',
     icon: 'calendar_today',
     linkUrl: '/oss/planning',
-    hidden: true
+    hidden: true,
   },
   {
     index: 6,
@@ -65,7 +65,7 @@ const list = [
     primaryText: 'Report Card',
     icon: 'assessment',
     linkUrl: '/oss/reports',
-    hidden: true
+    hidden: true,
   },
   {
     index: 7,
@@ -73,7 +73,7 @@ const list = [
     primaryText: 'Teachers',
     icon: 'school',
     linkUrl: '/oss/teachers',
-    hidden: true
+    hidden: true,
   },
   {
     index: 8,
@@ -81,7 +81,7 @@ const list = [
     primaryText: 'Payroll',
     icon: 'account_balance',
     linkUrl: '/oss/payrolls',
-    hidden: true
+    hidden: true,
   },
   {
     index: 9,
@@ -89,31 +89,39 @@ const list = [
     primaryText: 'Management Report',
     icon: 'trending_up',
     linkUrl: '/oss/management',
-    hidden: true
-  }
+    hidden: true,
+  },
 ];
 
 // const NavContentEx = ({ parentCallBack }) => {
 const NavContentEx = () => {
-  const isLogged = useSelector(state => state.isLogged);
-  const role = useSelector(state => state.role);
-  const navSelectedIndex = useSelector(state => state.navSelectedIndex);
+  // const isLogged = useSelector((state) => state.userProfile.isLogged);
+  const role = useSelector((state) => state.userProfile.roles[0].authority);
+
+  console.log('Role:' + role);
+
+  const navSelectedIndex = useSelector((state) => state.navSelectedIndex);
+  const userProfile = useSelector((state) => state.userProfile);
+
+  console.log('UserProfile:' + userProfile);
 
   const dispatch = useDispatch();
 
-
   // Re-assign left navigation menu based on login & role
-  if (isLogged && role === 'ADMIN') {
+  // if (isLogged && role === 'ADMIN') {
+  if (role === 'ADMIN') {
     list[3].hidden = false;
     list[4].hidden = false;
     list[5].hidden = false;
     list[7].hidden = false;
     list[9].hidden = false;
   }
-  if (isLogged && (role === 'STAFF' || role === 'ADMIN')) {
+  // if (isLogged && (role === 'STAFF' || role === 'ADMIN')) {
+  if (role === 'STAFF' || role === 'ADMIN') {
     list[8].hidden = false;
   }
-  if (isLogged) {
+  // if (isLogged) {
+  if (role != '') {
     list[6].hidden = false;
   }
 
@@ -122,7 +130,9 @@ const NavContentEx = () => {
       {list.map(({ title, primaryText, icon, linkUrl, hidden }, i) => (
         <Tooltip title={title}>
           <ListItem
-            onClick={e=>dispatch(userActions.setSelectedIndex(i))}
+            onClick={(e) =>
+              dispatch(userActions.setSelectedIndex(userProfile, i))
+            }
             key={primaryText}
             selected={i === navSelectedIndex}
             button
@@ -140,7 +150,8 @@ const NavContentEx = () => {
           </ListItem>
         </Tooltip>
       ))}
-      {isLogged && role === 'ADMIN' && (
+      {/* {isLogged && role === 'ADMIN' && ( */}
+      {role === 'ADMIN' && (
         <div>
           <Divider style={{ margin: '12px 0' }} />
           <Tooltip title='Setting for Admin'>
@@ -163,16 +174,4 @@ const NavContentEx = () => {
 NavContentEx.propTypes = {};
 NavContentEx.defaultProps = {};
 
-// function mapStateToProps(state) {
-//   if (state.isLogged == true) {
-//     const { isLogged, userProfile, role } = state;
-//     const { email, name } = userProfile;
-//     return {
-//       isLogged,
-//       name,
-//       role,
-//       email
-//     };
-//   }
-// }
 export default NavContentEx;

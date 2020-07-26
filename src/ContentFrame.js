@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Root, Header, Nav, Content, Footer, presets } from 'mui-layout';
-import { BrowserRouter as Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Redirect, Route } from 'react-router-dom';
 
 import Icon from '@material-ui/core/Icon';
 
@@ -34,6 +34,25 @@ import StudentDetail from './components/student/StudentDetail';
 
 import './styles.css';
 import { blue } from '@material-ui/core/colors';
+import { useSelector, useDispatch } from 'react-redux';
+
+const AuthenticatedRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      sessionStorage.getItem('userInfo') ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{
+            pathname: '/',
+            state: { from: props.location },
+          }}
+        />
+      )
+    }
+  />
+);
 
 function ContentFrame() {
   const [preset, setPreset] = useState('createStandardLayout');
@@ -41,7 +60,7 @@ function ContentFrame() {
     header: true,
     nav: true,
     content: true,
-    footer: true
+    footer: true,
   });
 
   return (
@@ -56,9 +75,9 @@ function ContentFrame() {
               // "&:hover": {
               //   backgroundColor: "green"
               // }
-            }
-          }
-        }
+            },
+          },
+        },
       })}
     >
       <Root
@@ -67,7 +86,7 @@ function ContentFrame() {
       >
         <CssBaseline />
         <Header
-          renderMenuIcon={opened =>
+          renderMenuIcon={(opened) =>
             opened ? <Icon>chevron_left</Icon> : <Icon>menu_rounded</Icon>
           }
         >
@@ -76,7 +95,7 @@ function ContentFrame() {
           }
         </Header>
         <Nav
-          renderIcon={collapsed =>
+          renderIcon={(collapsed) =>
             collapsed ? <Icon>chevron_right</Icon> : <Icon>chevron_left</Icon>
           }
           header={({ collapsed }) =>
@@ -92,21 +111,17 @@ function ContentFrame() {
             <Route exact path='/' component={Main} />
             <Route exact path='/oss' component={Main} />
             <Route exact path='/oss/main' component={Main} />
-
             <Route exact path='/oss/programs' component={Programs} />
-
-            <Route exact path='/oss/registration' component={Registration} />
-
+            <AuthenticatedRoute exact path='/oss/registration' component={Registration} />
             {/* Teacher */}
-            <Route exact path='/oss/teachercreate' component={TeacherCreate} />
-            <Route
+            <AuthenticatedRoute exact path='/oss/teachercreate' component={TeacherCreate} />
+            <AuthenticatedRoute
               exact
               path='/oss/teacheredit/:teacher_id'
               component={TeacherEdit}
             />
-            <Route exact path='/oss/teachers' component={TeacherList} />
-            <Route exact path='/oss/teacherdetail' component={TeacherDetail} />
-
+            <AuthenticatedRoute exact path='/oss/teachers' component={TeacherList} />
+            <AuthenticatedRoute exact path='/oss/teacherdetail' component={TeacherDetail} />
             {/* Guardian */}
             <Route
               exact
@@ -124,7 +139,6 @@ function ContentFrame() {
               path='/oss/guardiandetail'
               component={GuardianDetail}
             />
-
             {/* Student */}
             <Route
               exact
@@ -133,7 +147,11 @@ function ContentFrame() {
             />
             <Route exact path='/oss/students' component={StudentList} />
             <Route exact path='/oss/studentdetail' component={StudentDetail} />
-            <Route exact path='/oss/studentedit/:membership_id' component={StudentEdit} />
+            <Route
+              exact
+              path='/oss/studentedit/:membership_id'
+              component={StudentEdit}
+            />
           </div>
         </Content>
         <Footer>{data.footer && <FooterEx />}</Footer>
