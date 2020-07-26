@@ -97,14 +97,8 @@ const list = [
 const NavContentEx = () => {
   // const isLogged = useSelector((state) => state.userProfile.isLogged);
   const role = useSelector((state) => state.userProfile.roles[0].authority);
-
-  console.log('Role:' + role);
-
   const navSelectedIndex = useSelector((state) => state.navSelectedIndex);
   const userProfile = useSelector((state) => state.userProfile);
-
-  console.log('UserProfile:' + userProfile);
-
   const dispatch = useDispatch();
 
   // Re-assign left navigation menu based on login & role

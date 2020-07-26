@@ -112,16 +112,28 @@ function ContentFrame() {
             <Route exact path='/oss' component={Main} />
             <Route exact path='/oss/main' component={Main} />
             <Route exact path='/oss/programs' component={Programs} />
-            <AuthenticatedRoute exact path='/oss/registration' component={Registration} />
+            <Route exact path='/oss/registration' component={Registration} />
             {/* Teacher */}
-            <AuthenticatedRoute exact path='/oss/teachercreate' component={TeacherCreate} />
+            <AuthenticatedRoute
+              exact
+              path='/oss/teachercreate'
+              component={TeacherCreate}
+            />
             <AuthenticatedRoute
               exact
               path='/oss/teacheredit/:teacher_id'
               component={TeacherEdit}
             />
-            <AuthenticatedRoute exact path='/oss/teachers' component={TeacherList} />
-            <AuthenticatedRoute exact path='/oss/teacherdetail' component={TeacherDetail} />
+            <AuthenticatedRoute
+              exact
+              path='/oss/teachers'
+              component={TeacherList}
+            />
+            <AuthenticatedRoute
+              exact
+              path='/oss/teacherdetail'
+              component={TeacherDetail}
+            />
             {/* Guardian */}
             <Route
               exact
